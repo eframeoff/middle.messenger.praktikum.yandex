@@ -1,43 +1,21 @@
- <style>
-         .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    
-    li {
-        position: relative;
-        margin-bottom: 30px;
-    }
-
-
-</style>
-</head>
-<body>
-    <div class="container">
-        <div class="profile__main">
-        <a href="#" class="profile__logo">
-            <img class="profile"
-            src=""
-            alt="Photo profile">
-            <p>Иванов</p>
-            </a>
-            <button>Редактировать</button>
-        </div>
-        <div class="profile__information">
-            <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-            </ul>
-    
-        </div>
-        
+<div class="container">
+    <button onclick="document.location='./chat'" class="returnToChat" type="button" ><img src="{{arrow}}" alt="Назад"></button>
+  <div class="profile">
+    <div class="profile__main">
+      <a href="{{image}}" class="profile__main__logo">
+        <img src="{{image}}" alt="Photo profile" />
+      </a>
+            <p>{{display_name}}</p>
+      <button onclick="document.location='./profile_edit'">Редактировать</button>
     </div>
-</body>
-</html>
+    <div class="profile__information">
+      <ul>
+        <li>{{first_name}}</li>
+        <li>{{second_name}}</li>
+        <li>{{login}}</li>
+        <li>{{email}}</li>
+        <li>{{phone}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

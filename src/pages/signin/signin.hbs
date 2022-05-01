@@ -1,46 +1,20 @@
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-    .title {
-        text-align: center;
-        margin: 0 0 30px 0;
-    }
-    .form__group {
-        position: relative;
-        margin-bottom: 30px;
-    }
-    .form__label {
-        position: absolute;
-        top: 0;
-        color: #9e9e9e;
-
-    }
-    .form__input {
-        padding: 0 0 10px 0;
-        border: none;
-        border-bottom: 1px solid #e0e0e0;
-        background-color: transparent;
-    }
-</style>
-    <div class="container">
-        <p class="title">Авторизация</p>
+   <div class="container">
+       <div class="signin">
+        <p class="signin__title">Авторизация</p>
         <form action="/login">
-            <div class="form__group">
-                <label class="form__label"> {{data.loginField}} </label>
-                <input class="form__input" type="text" name="username">
+            <div class="signin__group">
+                <label class="signin__group__label"> {{loginField}} </label>
+                <input class="signin__group__input" type="text" name="login">
             </div> 
-             
-             <div class="form__group">
-                <label class="form__label">{{passwordField}}</label>
-                <input class="form__input" type="text" name="password">
+             <div class="signin__group">
+                <label class="signin__group__label">{{passwordField}}</label>
+                <input class="signin__group__input" type="password" name="password">
             </div> 
-         <div class="container">
-                <button type="button" class="form__button">{{butonsigninField}}</button>
-                <button type="button" class="form__button">{{butonsignupField}}</button>
+            <div class="signin__button">
+            <button onclick="document.location='./chat'" type="button" class="signin__button__blue">{{butonsigninField}}</button>
+            <button onclick="document.location='./signup'"type="button" class="signin__button__white">{{butonsignupField}}</button>
+            </div>
             </div>
         </form>
+        </div>
     </div>

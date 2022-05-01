@@ -1,37 +1,39 @@
 <div class="container">
-    <p>Регистрация</p>
+    <div class="signup">
+    <p class="signup__title">Регистрация</p>
     <form action="/register">
-        <div>
-            <label>mail</label>
-            <input type="email" name="mail">
+        <div class="signup__group">
+            <label class="signup__group__label">{{emailField}}</label>
+            <input class="signup__group__input" type="email" name="email">
         </div>
-        <div>
-            <label>login</label>
-            <input type="text" name="login">
+        <div class="signup__group">
+            <label class="signup__group__label">{{loginField}}</label>
+            <input class="signup__group__input" type="text" name="login">
         </div>
-        <div>
-            <label>name</label>
-            <input type="text" name="name">
+        <div class="signup__group">
+            <label class="signup__group__label">{{first_nameField}}</label>
+            <input class="signup__group__input" type="text" name="first_name">
         </div>
-        <div>
-            <label>surname</label>
-            <input type="text" name="surname">
+        <div class="signup__group">
+            <label class="signup__group__label">{{second_nameField}}</label>
+            <input class="signup__group__input" type="text" name="second_name">
         </div>
-        <div>
-            <label>number</label>
-            <input type="number" name="number">
+        <div class="signup__group">
+            <label class="signup__group__label">{{phoneField}}</label>
+            <input class="signup__group__input" type="number" name="phone">
         </div>
-        <div>
-            <label>password</label>
-            <input type="password" name="password">
+        <div class="signup__group">
+            <label class="signup__group__label">{{passwordField}}</label>
+            <input class="signup__group__input" type="password" name="password">
         </div>
-        <div>
-            <label>repeat password</label>
-            <input type="password" name="repeat_password">
+        <div class="signup__group">
+            <label class="signup__group__label">{{repeat_passwordField}}</label>
+            <input class="signup__group__input" type="password" name="repeat_password">
         </div>
-        <div class="container">
-            <button type="button" class="signin">Sign in</button>
-            <button type="button" class="signup">Sign up</button>
+        <div class="signup__button">
+            <button onclick="document.location='./signin'" type="button" class="signup__button__blue">{{butonsigninField}}</button>
+            <button onclick="document.location='./chat'" type="button" class="signup__button__white">{{butonsignupField}}</button>
         </div>
     </form>
+    </div>
 </div>

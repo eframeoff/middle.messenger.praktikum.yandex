@@ -1,4 +1,5 @@
 import template from './signin.hbs'
+import "./signin.css"
 
 // const id = 3;
 // var source = document.getElementById("root");
@@ -6,12 +7,14 @@ import template from './signin.hbs'
 
 const data = {
     loginField: "Логин",
-    passwordField: "Пароль"
+    passwordField: "Пароль",
+    butonsigninField: "Войти",
+    butonsignupField: "Зарегистрироваться"
 }
 
 
 export default function signinPage()  {
-    return template({data})
+    return template(data)
 }
 
 

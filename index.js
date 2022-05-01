@@ -55,6 +55,7 @@ import signinPage from './src/pages/signin/signin.js';
 import signupPage from './src/pages/signup/signup.js';
 import chatPage from './src/pages/chat/chat.js';
 import profilePage from './src/pages/profile/profile.js';
+import profileeditPage from './src/pages/profile_edit/profile_edit.js';
 import error404Page from './src/pages/404/404.js';
 import error500Page from './src/pages/500/500.js';
 
@@ -72,6 +73,8 @@ else if (window.location.href == 'http://localhost:1234/chat')
 root.innerHTML = chatPage()
 else if (window.location.href == 'http://localhost:1234/profile')
 root.innerHTML = profilePage()
+else if (window.location.href == 'http://localhost:1234/profile_edit')
+root.innerHTML = profileeditPage()
 else if (window.location.href == 'http://localhost:1234/404')
 root.innerHTML = error404Page()
 else if (window.location.href == 'http://localhost:1234/500')
