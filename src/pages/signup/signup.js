@@ -19,3 +19,4 @@ function signupPage()  {
 }
 
 document.getElementById('root').innerHTML = signupPage();
+

@@ -18,4 +18,4 @@ function profilePage() {
   return template(data);
 }
 
-document.getElementById('root').innerHTML = profilePage();
+document.getElementById("root").innerHTML = profilePage();

@@ -1,8 +1,8 @@
-import template from './404.hbs'
-import './404.css'
+import template from "./404.hbs";
+import "./404.css";
 
-function error404Page()  {
-    return template()
+function error404Page() {
+  return template();
 }
 
-document.getElementById('root').innerHTML = error404Page();
+document.getElementById("root").innerHTML = error404Page();

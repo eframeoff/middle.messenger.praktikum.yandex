@@ -1,7 +1,7 @@
-import template from './chat.hbs'
+import template from "./chat.hbs";
 
-function chatPage()  {
-    return template()
+function chatPage() {
+  return template();
 }
 
-document.getElementById('root').innerHTML = chatPage();
+document.getElementById("root").innerHTML = chatPage();

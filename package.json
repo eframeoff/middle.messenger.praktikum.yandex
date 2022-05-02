@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "clear": "rm -rf ./dist/",
     "start": "node app.js",
     "dev": "parcel static/*.html",
-    "build": "parcel build static/*.html"
+    "build": "npm run clear && parcel build static/*.html"
   },
   "keywords": [],
   "author": "",
