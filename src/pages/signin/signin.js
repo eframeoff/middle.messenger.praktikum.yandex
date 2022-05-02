@@ -13,10 +13,10 @@ const data = {
 }
 
 
-export default function signinPage()  {
+ function signinPage()  {
     return template(data)
 }
-
+document.getElementById('root').innerHTML = signinPage();
 
 
 

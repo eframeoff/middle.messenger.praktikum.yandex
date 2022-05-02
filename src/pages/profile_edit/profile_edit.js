@@ -14,6 +14,8 @@ const data = {
     arrow: arrow
 }
 
-export default function profileeditPage()  {
+function profileeditPage()  {
     return template(data)
 }
+
+document.getElementById('root').innerHTML = profileeditPage();
