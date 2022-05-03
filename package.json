@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "clear": "rm -rf ./dist/",
-    "start": "parcel static/index.html -p 3000",
+    "start": "parcel static/index.html -p 3000 && node app.js",
     "dev": "node app.js",
     "build": "npm run clear && parcel build static/*.html"
   },
