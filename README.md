@@ -1,4 +1,4 @@
-# Y.Practicum Messenger
+# Ya.Practicum Messenger
 
 ## FIGMA
 
