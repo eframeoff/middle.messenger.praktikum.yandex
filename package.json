@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "clear": "rm -rf ./dist/",
-    "start": "node app.js",
-    "dev": "parcel static/*.html",
+    "start": "parcel static/index.html -p 3000",
+    "dev": "node app.js",
     "build": "npm run clear && parcel build static/*.html"
   },
   "keywords": [],

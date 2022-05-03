@@ -7,7 +7,7 @@ const data = {
   butonsigninField: "Войти",
   butonsignupField: "Зарегистрироваться",
 };
-function signinPage() {
+export default function signinPage() {
   return template(data);
 }
 

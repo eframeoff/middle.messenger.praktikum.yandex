@@ -14,7 +14,7 @@ const data = {
   arrow: arrow,
 };
 
-function profilePage() {
+export default function profilePage() {
   return template(data);
 }
 

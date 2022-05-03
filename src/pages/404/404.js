@@ -1,7 +1,7 @@
 import template from "./404.hbs";
 import "./404.css";
 
-function error404Page() {
+export default function error404Page() {
   return template();
 }
 

@@ -14,7 +14,7 @@ const data = {
     butonsignupField: "Зарегистрироваться",
     arrow: arrow
 }
-function signupPage()  {
+export default function signupPage()  {
     return template(data)
 }
 

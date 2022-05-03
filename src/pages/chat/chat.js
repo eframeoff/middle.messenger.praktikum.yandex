@@ -1,6 +1,6 @@
 import template from "./chat.hbs";
 
-function chatPage() {
+export default function chatPage() {
   return template();
 }
 
