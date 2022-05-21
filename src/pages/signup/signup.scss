@@ -1,0 +1,102 @@
+$var1: #2d9cdb;
+$var2: #1c74a7;
+$var3: #9e9e9e;
+$var4: #e0e0e0;
+
+.returnToSignIn {
+  position: absolute;
+  top: 4%;
+  left: 3%;
+  font-weight: bold;
+  width: auto;
+  height: 30px;
+  color: white;
+  text-decoration: none;
+  background: $var1;
+  transition: 0.2s;
+  border: none;
+  border-radius: 40px;
+
+  &:hover {
+    background: $var2;
+  }
+}
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__title {
+    text-align: center;
+    margin: 0 0 60px;
+  }
+
+  &__group {
+    position: relative;
+    margin-bottom: 30px;
+    padding: 0 0 20;
+
+    &__label {
+      position: absolute;
+      color: $var3;
+      bottom: 45;
+    }
+
+    &__input {
+      width: 350px;
+      border: none;
+      border-bottom: 1px solid $var4;
+      background-color: transparent;
+    }
+
+    &__error {
+      position: absolute;
+      width: 350px;
+      color: red;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      font-weight: bold;
+      width: 160px;
+      height: 50px;
+      height: 30px;
+      text-decoration: none;
+      transition: 0.2s;
+      border-radius: 40px;
+    }
+
+    &__blue {
+      color: white;
+      background: $var1;
+      border: 2px solid $var1;
+
+      &:hover {
+        background: white;
+        color: $var1;
+        border-color: $var1;
+      }
+    }
+
+    &__white {
+      color: $var1;
+      background: white;
+      border: 2px solid $var1;
+
+      &:hover {
+        color: white;
+        background: $var1;
+        border: 2px solid $var1;
+      }
+    }
+  }
+}

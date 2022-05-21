@@ -1,0 +1,90 @@
+$var1: #2d9cdb;
+$var2: #1c74a7;
+
+.returnToChat {
+  position: absolute;
+  top: 4%;
+  left: 3%;
+  font-weight: bold;
+  width: 52px;
+  height: 28px;
+  color: white;
+  text-decoration: none;
+  background: $var1;
+  transition: 0.2s;
+  border: none;
+  border-radius: 40px;
+
+  img {
+    text-align: center;
+  }
+
+  &:hover {
+    background: $var2;
+  }
+}
+
+.profile {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 500px;
+
+    img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+    }
+
+    p {
+      text-align: center;
+    }
+
+    button {
+      font-weight: bold;
+      width: 120px;
+      height: 50px;
+      height: 30px;
+      text-decoration: none;
+      transition: 0.2s;
+      border-radius: 40px;
+      color: white;
+      background: $var1;
+      border: 2px solid $var1;
+
+      &:hover {
+        background: white;
+        color: $var1;
+        border-color: $var1;
+      }
+    }
+  }
+
+  &__information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 500px;
+
+    ul {
+      padding: 0;
+
+      li {
+        position: relative;
+        margin-bottom: 30px;
+        list-style-type: none;
+        text-align: center;
+      }
+    }
+  }
+}
