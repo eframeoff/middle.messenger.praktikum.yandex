@@ -1,5 +1,9 @@
 # Ya.Practicum Messenger
 
+## Pull requests
+
+https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/3
+
 ## FIGMA
 
 https://www.figma.com/file/rlbZs2pd7V9ljcckeUEa0G/Y.Practicum-Messenger?node-id=0%3A1
