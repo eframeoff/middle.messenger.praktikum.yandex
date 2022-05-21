@@ -1,5 +1,12 @@
 # Ya.Practicum Messenger
 
+## Pull requests
+
+2 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/6
+
+Проверенные PR:
+1 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/3
+
 ## FIGMA
 
 https://www.figma.com/file/rlbZs2pd7V9ljcckeUEa0G/Y.Practicum-Messenger?node-id=0%3A1
