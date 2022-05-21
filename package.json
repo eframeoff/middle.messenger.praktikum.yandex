@@ -1,0 +1,24 @@
+{
+  "name": "practicum",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "clear": "rm -rf ./dist/",
+    "start": "parcel static/index.html -p 3000 && node app.js",
+    "dev": "node app.js",
+    "build": "npm run clear && parcel build static/*.html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@parcel/config-default": "^2.5.0",
+    "express": "^4.18.1",
+    "handlebars": "^4.7.7",
+    "postcss": "^8.4.13"
+  },
+  "devDependencies": {
+    "parcel": "^2.5.0",
+    "parcel-transformer-hbs": "^1.0.4"
+  }
+}
