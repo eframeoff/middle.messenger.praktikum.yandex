@@ -15,10 +15,6 @@ https://www.figma.com/file/rlbZs2pd7V9ljcckeUEa0G/Y.Practicum-Messenger?node-id=
 
 https://teal-crepe-537643.netlify.app
 
-## Pull requests
-
-https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/3
-
 ## Установка
 
 ```bash
