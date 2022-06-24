@@ -3,33 +3,40 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel static/index.html -p 3000",
-    "dev": "node app.js",
+    "dev": "parcel static/index.html -p 3000",
+    "start": "node app.js",
     "build": "parcel build static/*.html",
     "stylelint": "stylelint src/pages/**/*.scss --custom-syntax postcss-scss",
-    "eslint": "eslint src/pages/**/*.ts"
+    "eslint": "eslint src/pages/**/*.ts",
+    "test": "mocha -r jsdom-global/register -r ts-node/register 'src/utils/http/*.spec.ts'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@parcel/config-default": "^2.5.0",
-    "express": "^4.18.1",
-    "handlebars": "^4.7.7",
-    "postcss": "^8.4.13"
+    "@parcel/config-default": "2.5.0",
+    "express": "4.18.1",
+    "handlebars": "4.7.7",
+    "postcss": "8.4.13"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.5.0",
-    "@typescript-eslint/eslint-plugin": "^5.25.0",
-    "@typescript-eslint/parser": "^5.25.0",
-    "eslint": "^8.15.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "parcel": "^2.5.0",
-    "parcel-transformer-hbs": "^1.0.4",
-    "postcss-scss": "^4.0.4",
-    "sass": "^1.52.1",
-    "stylelint": "^14.8.2",
-    "stylelint-config-standard": "^25.0.0",
-    "typescript": "^4.6.4"
+    "@parcel/transformer-sass": "2.5.0",
+    "@types/chai": "4.3.1",
+    "@types/jsdom": "16.2.14",
+    "@types/mocha": "9.1.1",
+    "@typescript-eslint/eslint-plugin": "5.25.0",
+    "@typescript-eslint/parser": "5.25.0",
+    "chai": "4.3.6",
+    "eslint": "8.15.0",
+    "eslint-config-airbnb": "19.0.4",
+    "mocha": "10.0.0",
+    "parcel": "2.5.0",
+    "parcel-transformer-hbs": "1.0.4",
+    "postcss-scss": "4.0.4",
+    "sass": "1.52.1",
+    "stylelint": "14.8.2",
+    "stylelint-config-standard": "25.0.0",
+    "ts-node": "10.8.1",
+    "typescript": "4.6.4"
   }
 }

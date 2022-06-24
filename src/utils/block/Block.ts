@@ -1,4 +1,4 @@
-import EventBus from "./EventBus";
+import EventBus from "../EventBus";
 
 export default class Block {
   static EVENTS = {
@@ -8,8 +8,14 @@ export default class Block {
     FLOW_RENDER: "flow:render",
   };
 
-  _element = null;
-  _meta = null;
+  eventBus: () => EventBus;
+  props: { [key: string]: any };
+  _element: HTMLElement;
+
+  _meta: {
+    tagName: any;
+    props: object;
+  } | null = null;
 
   /** JSDoc
    * @param {string} tagName
@@ -17,7 +23,7 @@ export default class Block {
    *
    * @returns {void}
    */
-  constructor(tagName = "div", props = {}) {
+  constructor(tagName: "div", props = {}) {
     const eventBus = new EventBus();
     this._meta = {
       tagName,
@@ -32,34 +38,37 @@ export default class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
-    const { tagName } = this._meta;
+  private _createResources() {
+    const tagName = this._meta?.tagName;
     this._element = this._createDocumentElement(tagName);
   }
 
   init() {
     this._createResources();
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+  }
+
+  private _componentDidMount() {
+    this.componentDidMount();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  _componentDidMount() {
-    this.componentDidMount();
+  componentDidMount(oldProps?: object) {
+    console.log(oldProps);
   }
-
-  componentDidMount(oldProps?: object) {}
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps, newProps) {
+  private _componentDidUpdate(oldProps: any, newProps: any) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -67,11 +76,12 @@ export default class Block {
     this._render();
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: any, newProps: any) {
+    console.log(oldProps, newProps);
     return true;
   }
 
-  setProps = (nextProps) => {
+  setProps = (nextProps: any) => {
     if (!nextProps) {
       return;
     }
@@ -83,23 +93,22 @@ export default class Block {
     return this._element;
   }
 
-  _render() {
-    const block = this.render();
+  private _render() {
+    const block: string = this.render();
     this._removeEvents();
-
     this._element.innerHTML = block;
     this._addEvents();
   }
 
-  render() {}
-
+  public render(): string {
+    return "";
+  }
   getContent() {
     return this.element;
   }
 
-  _makePropsProxy(props) {
+  private _makePropsProxy(props: any) {
     const self = this;
-
     return new Proxy(props, {
       get(target, prop) {
         const value = target[prop];
@@ -116,7 +125,7 @@ export default class Block {
     });
   }
 
-  _createDocumentElement(tagName) {
+  private _createDocumentElement(tagName: any) {
     return document.createElement(tagName);
   }
 
@@ -128,7 +137,7 @@ export default class Block {
     this.getContent().style.display = "none";
   }
 
-  _addEvents() {
+  private _addEvents() {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -136,7 +145,7 @@ export default class Block {
     });
   }
 
-  _removeEvents() {
+  private _removeEvents() {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {

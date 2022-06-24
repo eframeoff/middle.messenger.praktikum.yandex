@@ -1,7 +1,36 @@
 $var1: #2d9cdb;
 $var2: #1c74a7;
 
-.returnToChat {
+#avatarProfile {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.displayName {
+  text-align: center;
+}
+
+.profileButtonBlue {
+  font-weight: bold;
+  width: 120px;
+  height: 50px;
+  height: 30px;
+  text-decoration: none;
+  transition: 0.2s;
+  border-radius: 40px;
+  color: white;
+  background: $var1;
+  border: 2px solid $var1;
+
+  &:hover {
+    background: white;
+    color: $var1;
+    border-color: $var1;
+  }
+}
+
+.returnToChatButton {
   position: absolute;
   top: 4%;
   left: 3%;
@@ -14,10 +43,6 @@ $var2: #1c74a7;
   transition: 0.2s;
   border: none;
   border-radius: 40px;
-
-  img {
-    text-align: center;
-  }
 
   &:hover {
     background: $var2;
@@ -37,35 +62,6 @@ $var2: #1c74a7;
     align-items: center;
     width: 400px;
     height: 500px;
-
-    img {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-    }
-
-    p {
-      text-align: center;
-    }
-
-    button {
-      font-weight: bold;
-      width: 120px;
-      height: 50px;
-      height: 30px;
-      text-decoration: none;
-      transition: 0.2s;
-      border-radius: 40px;
-      color: white;
-      background: $var1;
-      border: 2px solid $var1;
-
-      &:hover {
-        background: white;
-        color: $var1;
-        border-color: $var1;
-      }
-    }
   }
 
   &__information {
@@ -76,10 +72,10 @@ $var2: #1c74a7;
     width: 400px;
     height: 500px;
 
-    ul {
+    &_list {
       padding: 0;
 
-      li {
+      &-item {
         position: relative;
         margin-bottom: 30px;
         list-style-type: none;

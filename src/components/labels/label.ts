@@ -1,14 +1,17 @@
-// import template from "./button.hbs"
-// import { compile } from "handlebars";
-import Block from "../../utils/Block"
-import { tpl } from './tpl';
+import Block from "../../utils/block/Block";
+import { tpl } from "./tpl";
+
+interface LabelProps {
+  classLabel: string;
+  textLabel: string;
+}
 
 export class Label extends Block {
-    constructor(props: any) {
-        super("div", props);
-    }
-    
-    render() {
-        return tpl(this.props)
-    }
+  constructor(props: LabelProps) {
+    super("div", props);
+  }
+
+  render() {
+    return tpl(this.props);
+  }
 }

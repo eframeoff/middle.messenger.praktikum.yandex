@@ -1,91 +1,93 @@
 import "./profile_edit.scss";
 import { tpl } from "./tpl";
-import image from "../../images/profile.jpg";
-import arrow from "../../images/arrow.png";
-import Block from "../../utils/Block";
+import Block from "../../utils/block/Block";
 import { Input } from "../../components/inputs/input";
 import { Label } from "../../components/labels/label";
 import { Button } from "../../components/button/button";
 import { validateFunc } from "../../utils/validate";
+import LoginApi from "../../api/loginApi";
+import { Router } from "../../utils/router/Router";
+import ChatApi from "../../api/chatApi";
 
-export default class profileeditPage extends Block {
+interface DataProps {
+  image: string;
+  passwordVisibleButton: HTMLElement;
+  returnToProfileButton: HTMLElement;
+  display_nameInput: HTMLElement;
+  emailLabel: HTMLElement;
+  emailInput: HTMLElement;
+  loginLabel: HTMLElement;
+  loginInput: HTMLElement;
+  first_nameLabel: HTMLElement;
+  first_nameInput: HTMLElement;
+  second_nameLabel: HTMLElement;
+  second_nameInput: HTMLElement;
+  phoneLabel: HTMLElement;
+  phoneInput: HTMLElement;
+  oldpasswordLabel: HTMLElement;
+  oldpasswordInput: HTMLElement;
+  newpasswordLabel: HTMLElement;
+  newpasswordInput: HTMLElement;
+  profileeditButton: HTMLElement;
+  changePassVisible: HTMLElement;
+  savePassword: HTMLElement;
+}
+const router = new Router();
+
+export class ProfileEditPage extends Block {
   constructor() {
     super("div", {
-      profileeditButton: new Button({
-        id: "profile_edit",
-        classButton: "profile_edit__button__blue",
+      passwordVisibleButton: new Button({
+        id: "passwordVisibleButton",
+        classButton: "passwordVisibleButton",
         typeButton: "button",
-        textButton: "Сохранить",
+        textButton: "Поменять пароль",
       }),
-
+      returnToProfileButton: new Button({
+        id: "returnToProfileButton",
+        classButton: "returnToProfileButton",
+        typeButton: "button",
+        textButton: "Назад",
+      }),
+      profileeditButton: new Button({
+        id: "profileEdit",
+        classButton: "profileEdit",
+        typeButton: "button",
+        textButton: "Сохранить данные",
+      }),
+      savePassword: new Button({
+        id: "savePassword",
+        classButton: "savePassword",
+        typeButton: "button",
+        textButton: "Сохранить пароль",
+      }),
       emailLabel: new Label({
-        classLabel: "profile_edit__group__label",
+        classLabel: "profileLabel",
         textLabel: "Почта",
       }),
       loginLabel: new Label({
-        classLabel: "profile_edit__group__label",
+        classLabel: "profileLabel",
         textLabel: "Логин",
       }),
       first_nameLabel: new Label({
-        classLabel: "profile_edit__group__label",
+        classLabel: "profileLabel",
         textLabel: "Имя",
       }),
       second_nameLabel: new Label({
-        classLabel: "profile_edit__group__label",
+        classLabel: "profileLabel",
         textLabel: "Фамилия",
       }),
       phoneLabel: new Label({
-        classLabel: "profile_edit__group__label",
+        classLabel: "profileLabel",
         textLabel: "Телефон",
       }),
       oldpasswordLabel: new Label({
-        classLabel: "profile_edit__group__label",
+        classLabel: "profileLabel",
         textLabel: "Старый пароль",
       }),
       newpasswordLabel: new Label({
-        classLabel: "profile_edit__group__label",
+        classLabel: "profileLabel",
         textLabel: "Новый пароль",
-      }),
-
-      display_nameInput: new Input({
-        classInput: "profile_edit__group__input",
-        typeInput: "text",
-        nameInput: "display_name",
-      }),
-      emailInput: new Input({
-        classInput: "profile_edit__group__input",
-        typeInput: "email",
-        nameInput: "email",
-      }),
-      loginInput: new Input({
-        classInput: "profile_edit__group__input",
-        typeInput: "text",
-        nameInput: "login",
-      }),
-      first_nameInput: new Input({
-        classInput: "profile_edit__group__input",
-        typeInput: "text",
-        nameInput: "first_name",
-      }),
-      second_nameInput: new Input({
-        classInput: "profile_edit__group__input",
-        typeInput: "text",
-        nameInput: "second_name",
-      }),
-      phoneInput: new Input({
-        classInput: "profile_edit__group__input",
-        typeInput: "number",
-        nameInput: "phone",
-      }),
-      oldpasswordInput: new Input({
-        classInput: "profile_edit__group__input",
-        typeInput: "password",
-        nameInput: "oldPassword",
-      }),
-      newpasswordInput: new Input({
-        classInput: "profile_edit__group__input",
-        typeInput: "password",
-        nameInput: "newPassword",
       }),
       events: {
         click: (e: Event) => this.saveProfile(e),
@@ -93,10 +95,20 @@ export default class profileeditPage extends Block {
         focusin: (e: Event) => this.checkoff(e),
       },
     });
+    this.props.changePassVisible = false;
   }
+
+  componentDidMount() {
+    LoginApi.getUser()
+      .then((data: any) => {
+        this.props.userData = JSON.parse(data.response);
+      })
+      .catch((data) => console.log(data));
+  }
+
   checkoff = (e: Event) => {
     const eTarget = <HTMLInputElement>e.target;
-    document.getElementById(`${eTarget.name}Error`).innerHTML = "";
+    document.getElementById(`${eTarget.name}Error`)!.innerHTML = "";
   };
   check = (e: Event) => {
     const eTarget = <HTMLInputElement>e.target;
@@ -108,77 +120,178 @@ export default class profileeditPage extends Block {
       });
     }
   };
-  saveProfile = (e: Event) => {
-    if (
-      e.target ===
-      document.getElementById(this.props.profileeditButton.props.id)
-    ) {
-      const form: HTMLFormElement | null = document.querySelector(
-        'form[name="formDat"]'
-      );
-      const data: { [key: string]: string } = {};
-      const dataArray = Array.from(form!.elements) as HTMLInputElement[];
-      dataArray.push(document.querySelector('input[name="display_name"]'));
-      dataArray.forEach((element) => {
-        validateFunc({
-          value: element.value,
-          type: element.name,
-          errorMsg: `${element.name}Error`,
-        });
-        data[element.id] = element.value;
-      });
 
-      if (form !== null) {
-        const formData: FormData = new FormData(form);
-        formData.append(
-          "display_name",
-          (<HTMLInputElement>(
-            document.querySelector('input[name="display_name"]')
-          )).value
+  changeAvatar() {
+    const userAvatarInput = <HTMLFormElement>(
+      document.getElementById("userAvatarInput")
+    );
+    if (userAvatarInput.files!.length) {
+      const userAvatarFormData = new FormData();
+      userAvatarFormData.append("avatar", userAvatarInput.files[0]);
+      for (const pair of userAvatarFormData.entries()) {
+        console.log(pair[1]);
+        console.log(pair[0] + pair[1]);
+      }
+      ChatApi.changeUserAvatar({
+        data: userAvatarFormData,
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+        .then(() => {
+          alert('Аватар успешно изменен');
+        })
+        .catch((data) => console.log(data));
+    }
+  }
+
+  savePassword() {
+    const oldPass = document.querySelector('input[name="oldPassword"]')?.value;
+    const newPass = document.querySelector('input[name="newPassword"]')?.value;
+    const data = {
+      oldPassword: oldPass,
+      newPassword: newPass,
+    };
+    ChatApi.savePassword(data)
+      .then(() => {
+        alert("Пароль успешно сохранен");
+        this.props.changePassVisible = !this.props.changePassVisible;
+      })
+      .catch((data) => console.log(data));
+  }
+
+  saveUserData(data: any) {
+    ChatApi.saveUserData(data)
+      .then(() => {
+        alert("Данные пользователя успешно сохранены");
+      })
+      .catch((data) => console.log(data));
+  }
+
+  saveProfile = (e: Event) => {
+    switch (e.target) {
+      case document.getElementById("passwordVisibleButton"):
+        this.props.changePassVisible = !this.props.changePassVisible;
+        break;
+      case document.getElementById(this.props.returnToProfileButton.props.id):
+        router.go("/profile");
+        break;
+      case document.getElementById("avatar"):
+        this.changeAvatar();
+        break;
+      case document.getElementById("savePassword"):
+        this.savePassword();
+        break;
+      case document.getElementById(this.props.profileeditButton.props.id): {
+        const form: HTMLFormElement | null = document.querySelector(
+          'form[name="formDat"]'
         );
-        console.log(Object.fromEntries(formData));
+        let valid = true;
+        const data: { [key: string]: string } = {};
+        const dataArray = Array.from(form!.elements) as HTMLInputElement[];
+        dataArray.push(document.querySelector('input[name="display_name"]')!);
+        dataArray.forEach((element) => {
+          valid = validateFunc({
+            value: element.value,
+            type: element.name,
+            errorMsg: `${element.name}Error`,
+          })
+          ? valid
+          : false;
+          data[element.id] = element.value;
+        });
+
+        if (form !== null) {
+          const formData: FormData = new FormData(form);
+          formData.append(
+            "display_name",
+            (<HTMLInputElement>(
+              document.querySelector('input[name="display_name"]')
+            )).value
+          );
+          console.log(Object.fromEntries(formData));
+          if (valid) {
+          this.saveUserData(Object.fromEntries(formData));
+          }
+        }
+        break;
       }
     }
   };
+
   render() {
-    const data: {
-      arrow: HTMLImageElement;
-      image: HTMLImageElement;
-      display_name: HTMLElement;
-      emailLabel: HTMLElement;
-      emailInput: HTMLElement;
-      loginLabel: HTMLElement;
-      loginInput: HTMLElement;
-      first_nameLabel: HTMLElement;
-      first_nameInput: HTMLElement;
-      second_nameLabel: HTMLElement;
-      second_nameInput: HTMLElement;
-      phoneLabel: HTMLElement;
-      phoneInput: HTMLElement;
-      oldpasswordLabel: HTMLElement;
-      oldpasswordInput: HTMLElement;
-      newpasswordLabel: HTMLElement;
-      newpasswordInput: HTMLElement;
-      profileeditButton: HTMLElement;
-    } = {
-      arrow: arrow,
-      image: image,
+    const data: DataProps = {
+      returnToProfileButton: this.props.returnToProfileButton.render(),
+      image:
+        `https://ya-praktikum.tech/api/v2/resources` +
+        this.props.userData?.avatar,
+      loginInput: new Input({
+        classInput: "profileInput",
+        typeInput: "text",
+        nameInput: "login",
+        idInput: "login",
+        valueInput: this.props.userData?.login,
+      }).render(),
+      display_nameInput: new Input({
+        classInput: "profileInput",
+        typeInput: "text",
+        nameInput: "display_name",
+        idInput: "display_name",
+        valueInput: this.props.userData?.display_name,
+      }).render(),
+      emailInput: new Input({
+        classInput: "profileInput",
+        typeInput: "email",
+        nameInput: "email",
+        idInput: "email",
+        valueInput: this.props.userData?.email,
+      }).render(),
+      first_nameInput: new Input({
+        classInput: "profileInput",
+        typeInput: "text",
+        nameInput: "first_name",
+        idInput: "first_name",
+        valueInput: this.props.userData?.first_name,
+      }).render(),
+      second_nameInput: new Input({
+        classInput: "profileInput",
+        typeInput: "text",
+        nameInput: "second_name",
+        idInput: "second_name",
+        valueInput: this.props.userData?.second_name,
+      }).render(),
+      phoneInput: new Input({
+        classInput: "profileInput",
+        typeInput: "number",
+        nameInput: "phone",
+        idInput: "phone",
+        valueInput: this.props.userData?.phone,
+      }).render(),
+      oldpasswordInput: new Input({
+        classInput: "profileInput",
+        typeInput: "password",
+        nameInput: "oldPassword",
+        idInput: "oldPass",
+        valueInput: "",
+      }).render(),
+      newpasswordInput: new Input({
+        classInput: "profileInput",
+        typeInput: "password",
+        nameInput: "newPassword",
+        idInput: "newPass",
+        valueInput: "",
+      }).render(),
+      passwordVisibleButton: this.props.passwordVisibleButton.render(),
       emailLabel: this.props.emailLabel.render(),
-      emailInput: this.props.emailInput.render(),
       loginLabel: this.props.loginLabel.render(),
-      loginInput: this.props.loginInput.render(),
       first_nameLabel: this.props.first_nameLabel.render(),
-      first_nameInput: this.props.first_nameInput.render(),
       second_nameLabel: this.props.second_nameLabel.render(),
-      second_nameInput: this.props.second_nameInput.render(),
       phoneLabel: this.props.phoneLabel.render(),
-      phoneInput: this.props.phoneInput.render(),
       oldpasswordLabel: this.props.oldpasswordLabel.render(),
-      oldpasswordInput: this.props.oldpasswordInput.render(),
       newpasswordLabel: this.props.newpasswordLabel.render(),
-      newpasswordInput: this.props.newpasswordInput.render(),
       profileeditButton: this.props.profileeditButton.render(),
-      display_nameInput: this.props.display_nameInput.render(),
+      savePassword: this.props.savePassword.render(),
+      changePassVisible: this.props.changePassVisible,
     };
 
     return tpl(data);

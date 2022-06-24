@@ -12,6 +12,57 @@ $var3: #e0e0e0;
   height: auto;
 }
 
+.signinButtonBlue {
+  font-weight: bold;
+  width: 160px;
+  height: 50px;
+  height: 30px;
+  text-decoration: none;
+  transition: 0.2s;
+  border-radius: 40px;
+  color: white;
+  background: $var2;
+  border: 2px solid $var2;
+
+  &:hover {
+    background: white;
+    color: $var2;
+    border-color: $var2;
+  }
+}
+
+.signinButtonWhite {
+  font-weight: bold;
+  width: 160px;
+  height: 50px;
+  height: 30px;
+  text-decoration: none;
+  transition: 0.2s;
+  border-radius: 40px;
+  color: $var2;
+  background: white;
+  border: 2px solid $var2;
+
+  &:hover {
+    color: white;
+    background: $var2;
+    border: 2px solid $var2;
+  }
+}
+
+.signinLabel {
+  position: absolute;
+  color: $var1;
+  bottom: 45;
+}
+
+.signinInput {
+  width: 350px;
+  border: none;
+  border-bottom: 1px solid $var3;
+  background-color: transparent;
+}
+
 .signin {
   display: flex;
   flex-direction: column;
@@ -29,19 +80,6 @@ $var3: #e0e0e0;
     margin-bottom: 30px;
     padding: 0 0 20;
 
-    &__label {
-      position: absolute;
-      color: $var1;
-      bottom: 45;
-    }
-
-    &__input {
-      width: 350px;
-      border: none;
-      border-bottom: 1px solid $var3;
-      background-color: transparent;
-    }
-
     &__error {
       position: absolute;
       width: 350px;
@@ -54,39 +92,5 @@ $var3: #e0e0e0;
   &__button {
     display: flex;
     justify-content: space-between;
-
-    button {
-      font-weight: bold;
-      width: 160px;
-      height: 50px;
-      height: 30px;
-      text-decoration: none;
-      transition: 0.2s;
-      border-radius: 40px;
-    }
-
-    &__blue {
-      color: white;
-      background: $var2;
-      border: 2px solid $var2;
-
-      &:hover {
-        background: white;
-        color: $var2;
-        border-color: $var2;
-      }
-    }
-
-    &__white {
-      color: $var2;
-      background: white;
-      border: 2px solid $var2;
-
-      &:hover {
-        color: white;
-        background: $var2;
-        border: 2px solid $var2;
-      }
-    }
   }
 }

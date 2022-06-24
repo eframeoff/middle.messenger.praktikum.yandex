@@ -16,13 +16,13 @@ const source = `<div class="container">
             <div class='signin__group__error' id='passwordError'></div>
         
      </div> 
+     </form>
      <span> </span>
      <div class="signin__button">
          {{{ signinBtn }}}
          {{{ signupBtn }}}
      </div>
      </div>
- </form>
  </div>
 </div>`;
 
