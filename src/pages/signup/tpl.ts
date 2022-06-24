@@ -46,11 +46,12 @@ const source =`<div class="container">
         <div class='signup__group__error' id='repeat_passwordError'></div>
 
     </div>
+    </form>
+
     <div class="signup__button">
         {{{signupButtonIn}}}  
         {{{signupButtonChat}}}            
     </div>
-</form>
 </div>
 </div>`;
 

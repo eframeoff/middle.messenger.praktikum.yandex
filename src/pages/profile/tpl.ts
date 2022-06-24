@@ -1,31 +1,24 @@
-import Handlebars from 'handlebars';
+import Handlebars from "handlebars";
 
 const source = `<div class="container">
-<button
-  class="returnToChat"
-  type="button"
->
-  <img src="{{arrow}}" alt="Назад" />
-</button>
+{{{returnToChatButton}}}
 <div class="profile">
   <div class="profile__main">
-    <a href="{{image}}" class="profile__main__logo">
-      <img src="{{image}}" alt="Photo profile" />
+    <a href="{{avatar}}" class="profile__main__logo">
+      <img id="avatarProfile" src="{{avatar}}" alt="Photo profile" />
     </a>
-    <p>{{display_name}}</p>
+    <p class="displayName">{{userData.display_name}}</p>
     {{{profileButton}}}
   </div>
   <div class="profile__information">
-    <ul>
-      <li>{{first_name}}</li>
-      <li>{{second_name}}</li>
-      <li>{{login}}</li>
-      <li>{{email}}</li>
-      <li>{{phone}}</li>
+    <ul class="profile__information_list">
+      <li class="profile__information_list-item">{{userData.first_name}}</li>
+      <li class="profile__information_list-item">{{userData.second_name}}</li>
+      <li class="profile__information_list-item">{{userData.login}}</li>
+      <li class="profile__information_list-item">{{userData.email}}</li>
+      <li class="profile__information_list-item">{{userData.phone}}</li>
     </ul>
   </div>
 </div>
-</div>`
-;
-
+</div>`;
 export const tpl = Handlebars.compile(source);

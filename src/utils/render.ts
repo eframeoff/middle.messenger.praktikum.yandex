@@ -1,5 +1,5 @@
 export function render(elem: string, block: any) {
-  const root: HTMLElement = document.querySelector(elem);
+  const root: HTMLElement | null = document.querySelector(elem);
   if (!root) {
     throw new Error("Не найден вход");
   }

@@ -3,79 +3,49 @@ import Handlebars from "handlebars";
 const source = `
 <div class="chat">
   <div class="chat__list">
+    <div class="chat__list__buttons">{{{exitButton}}} {{{profileButton}}}</div>
+
     <div class="chat__list__search">
-      <button
-        class="returnToSignin"
-        type="button"
-      >
-        <img src="{{arrow}}" alt="Назад" />
-      </button>
-      <input
-        placeholder="Поиск"
-        type="text"
-        name="search"
-      />
+      {{{addChatButton}}}
+      {{{findInput}}}
     </div>
-    <div class="chat__list__users">
-      <div class="chat__list__users__unit">
-        <div class="avatar">
-          <img src="{{image}}" alt="" />
-        </div>
-        <div class="preview">
-          <div class="preview__name">Имя пользователя</div>
-          <div class="preview__lastmessage">
-          Последнее сообщение
-          </div>
-        </div>
-      </div>
-      <div class="chat__list__users__unit">
-        <div class="avatar">
-          <img src="{{image}}" alt="" />
-        </div>
-        <div class="preview">
-          <div class="preview__name">Имя пользователя</div>
-          <div class="preview__lastmessage">
-          Последнее сообщение
-          </div>
-        </div>
-      </div>
-      <div class="chat__list__users__unit">
-        <div class="avatar">
-          <img src="{{image}}" alt="" />
-        </div>
-        <div class="preview">
-          <div class="preview__name">Имя пользователя</div>
-          <div class="preview__lastmessage">
-            Последнее сообщение
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="chat__list__users" id="test">{{{chatMU}}}</div>
   </div>
+
   <div class="chat__messages">
     <div class="chat__messages__menu">
-      <img src="{{image}}" alt="" />
-      <div class="chat__messages__name">Название чата</div>
+      {{#if addSettingsVisible}}
+      <img class="chatAvatar" id="chatAvatar" src="{{chatAvatar}}" alt="" />
+      <div class="chat__messages__name">{{chatName}}</div>
+      {{{settingsChatButton}}} {{/if}}
     </div>
-
-    <div class="chat__messages__dialog">
-      <div class="message">
-        <span class="text text_break-word">Первое сообщение</span>
+    {{#if addChatVisible}}
+    <div class="chat__messages__settings">
+      {{{deleteChatButton}}} {{{addUserButton}}}
+      <div class="chat__messages__users">
+        Удалить пользователей: {{#each curChat.users}}
+        <div class="users" id="{{{id}}}">
+          <a>{{{login}}}</a>
+          {{{../userButton}}}
+        </div>
+        {{/each}}
       </div>
-      <div class="message">
-        <span class="text text_break-word">Второе сообщение</span>
-      </div>
-      <div class="message">
-        <span class="text text_break-word">Третье сообщение</span>
-      </div>
-      <form class="chat__messages__form" name="formDat">
-        {{{sendMessageInput}}} 
-        {{{sendMessageButton}}}
+    </div>
+    {{/if}}
+    <div class="chat__messages__dialog" id="chats">
+      {{{Message}}}
+    {{#if addSettingsVisible}}
+    <form class="chat__messages__form" name="formDat">
+        {{{sendMessageInput}}} {{{sendMessageButton}}}
         <div class="chat__messages__error" id="messageError"></div>
-      </form>
+    </form>
+    {{/if}}
     </div>
   </div>
 </div>
+
+{{{chatModal}}} {{{userModal}}}
+
 `;
 
 export const tpl = Handlebars.compile(source);

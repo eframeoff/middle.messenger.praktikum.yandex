@@ -1,42 +1,66 @@
 import "./profile.scss";
 import { tpl } from "./tpl";
-import image from "../../images/profile.jpg";
-import arrow from "../../images/arrow.png";
-import Block from "../../utils/Block";
+import Block from "../../utils/block/Block";
 import { Button } from "../../components/button/button";
+import LoginApi from "../../api/loginApi";
+import { Router } from "../../utils/router/Router";
 
-export default class profilePage extends Block {
+interface DataProps {
+  avatar: any;
+  userData: any;
+  returnToChatButton: HTMLElement;
+  profileButton: HTMLElement;
+} 
+
+const router = new Router();
+
+export class ProfilePage extends Block {
   constructor() {
     super("div", {
+      returnToChatButton: new Button({
+        id: "returnToChatButton",
+        classButton: "returnToChatButton",
+        typeButton: "button",
+        textButton: "Назад",
+      }),
       profileButton: new Button({
         id: "profile",
-        classButton: "profile__button__blue",
+        classButton: "profileButtonBlue",
         typeButton: "button",
         textButton: "Редактировать",
       }),
+      events: {
+        click: (e: Event) => this.send(e),
+      },
+    });
+  }
+
+  send(e: Event) {
+    switch (e.target) {
+      case document.getElementById(this.props.profileButton.props.id): {
+        router.go("/settings");
+        break;
+      }
+      case document.getElementById(this.props.returnToChatButton.props.id): {
+        router.go("/messenger");
+        break;
+      }
+    }
+  }
+
+  componentDidMount() {
+    LoginApi.getUser().then((data: any) => {
+      this.props.userData = JSON.parse(data.response);
     });
   }
 
   render() {
-    const data: {
-      display_name: string,
-      first_name: string,
-      second_name: string,
-      login: string,
-      email: string,
-      phone: number,
-      arrow: HTMLImageElement;
-      image: HTMLImageElement;
-      profileButton: HTMLElement;
-    } = {
-      display_name: 'IVA',
-      first_name: 'Иван',
-      second_name: 'Иванов',
-      login: 'IvanI',
-      email: 'ivanov@yandex.ru',
-      phone: 89222222222,
-      arrow: arrow,
-      image: image,
+    const data: DataProps = {
+      avatar:
+        `https://ya-praktikum.tech/api/v2/resources` +
+        this.props.userData?.avatar,
+      userData: this.props.userData,
+      returnToChatButton: this.props.returnToChatButton.render(),
       profileButton: this.props.profileButton.render(),
     };
 

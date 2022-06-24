@@ -1,8 +1,8 @@
 import "./500.scss";
 import {tpl} from "./tpl";
-import Block from "../../utils/Block";
+import Block from "../../utils/block/Block";
 
-export default class page500 extends Block {
+export class Page500 extends Block {
   constructor() {
     super("div");
   }

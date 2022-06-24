@@ -1,45 +1,63 @@
 import "./signin.scss";
 import { tpl } from "./tpl";
-import Block from "../../utils/Block";
+import Block from "../../utils/block/Block";
 import { Button } from "../../components/button/button";
 import { Input } from "../../components/inputs/input";
 import { Label } from "../../components/labels/label";
 import { validateFunc } from "../../utils/validate";
+import { Router } from "../../utils/router/Router";
+import LoginApi from "../../api/loginApi";
+const router = new Router();
 
-export default class signinPage extends Block {
+interface DataProps {
+    loginField: string;
+    passwordField: string;
+    signinBtn: HTMLElement;
+    signupBtn: HTMLElement;
+    loginInput: HTMLElement;
+    passwordInput: HTMLElement;
+    loginLabel: HTMLElement;
+    passwordLabel: HTMLElement;
+}
+
+export class SignInPage extends Block {
   constructor() {
     super("div", {
       loginLabel: new Label({
-        classLabel: "signin__group__label",
+        classLabel: "signinLabel",
         textLabel: "Логин",
       }),
       passwordLabel: new Label({
-        classLabel: "signin__group__label",
+        classLabel: "signinLabel",
         textLabel: "Пароль",
       }),
 
       loginInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signinInput",
         typeInput: "text",
         nameInput: "login",
+        idInput: "login",
+        valueInput: "",
       }),
 
       passwordInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signinInput",
         typeInput: "password",
         nameInput: "password",
+        idInput: "password",
+        valueInput: "",
       }),
 
       signinButton: new Button({
-        id: "login",
-        classButton: "signin__button__blue",
+        id: "signinButtonBlue",
+        classButton: "signinButtonBlue",
         typeButton: "button",
         textButton: "Войти",
       }),
 
       signupButton: new Button({
-        id: "regist",
-        classButton: "signin__button__white",
+        id: "signinButtonWhite",
+        classButton: "signinButtonWhite",
         typeButton: "button",
         textButton: "Зарегистрироваться",
       }),
@@ -50,10 +68,12 @@ export default class signinPage extends Block {
       },
     });
   }
+
   checkoff = (e: Event) => {
     const eTarget = <HTMLInputElement>e.target;
-    document.getElementById(`${eTarget.name}Error`).innerHTML = "";
+    document.getElementById(`${eTarget.name}Error`)!.innerHTML = "";
   };
+
   check = (e: Event) => {
     const eTarget = <HTMLInputElement>e.target;
     if (eTarget.nodeName === "INPUT") {
@@ -64,47 +84,52 @@ export default class signinPage extends Block {
       });
     }
   };
-  signIn = (e: Event) => {
-    if (
-      e.target === document.getElementById(this.props.signupButton.props.id)
-    ) {
-      document.location = "./signup";
-    }
 
-    if (
-      e.target === document.getElementById(this.props.signinButton.props.id)
-    ) {
-      const form: HTMLFormElement = document.querySelector(
-        'form[name="formDat"]'
-      );
-      const data: { [key: string]: string } = {};
-      const dataArray = Array.from(form!.elements) as HTMLInputElement[];
-      dataArray.forEach((element) => {
-        validateFunc({
-          value: element.value,
-          type: element.name,
-          errorMsg: `${element.name}Error`,
+  componentDidMount() {
+    LoginApi.getUser()
+      .then(() => {
+        router.go("/messenger");
+      })
+      .catch((data) => console.log(JSON.parse(data.response)));
+  }
+
+  signIn = (e: Event) => {
+    switch (e.target) {
+      case document.getElementById(this.props.signupButton.props.id):
+        router.go("/sign-up");
+        break;
+      case document.getElementById(this.props.signinButton.props.id): {
+        console.log('sddss')
+        let valid = true;
+        const form: HTMLFormElement | null = document.querySelector(
+          'form[name="formDat"]'
+        )!;
+        const data: { [key: string]: string } = {};
+        const dataArray = Array.from(form!.elements) as HTMLInputElement[];
+        dataArray.forEach((element) => {
+          valid = validateFunc({
+            value: element.value,
+            type: element.name,
+            errorMsg: `${element.name}Error`,
+          });
+          data[element.id] = element.value;
         });
-        data[element.id] = element.value;
-      });
-      if (form !== null) {
-        const formData: FormData = new FormData(form);
-        console.log(Object.fromEntries(formData));
+        if (form !== null) {
+          const formData: FormData = new FormData(form);
+          if (valid) {
+            const data = Object.fromEntries(formData);
+            LoginApi.signIn(data)
+              .then(() => router.go("/messenger"))
+              .catch((data) => console.log(JSON.parse(data.response)));
+          }
+        }
+        break;
       }
     }
   };
 
   render() {
-    const data: {
-      loginField: string;
-      passwordField: string;
-      signinBtn: HTMLElement;
-      signupBtn: HTMLElement;
-      loginInput: HTMLElement;
-      passwordInput: HTMLElement;
-      loginLabel: HTMLElement;
-      passwordLabel: HTMLElement;
-    } = {
+    const data : DataProps = {
       loginField: "Логин",
       passwordField: "Пароль",
       signinBtn: this.props.signinButton.render(),
@@ -114,7 +139,6 @@ export default class signinPage extends Block {
       loginLabel: this.props.loginLabel.render(),
       passwordLabel: this.props.passwordLabel.render(),
     };
-
     return tpl(data);
   }
 }

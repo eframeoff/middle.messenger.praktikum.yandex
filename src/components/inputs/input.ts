@@ -1,14 +1,20 @@
-// import template from "./button.hbs"
-// import { compile } from "handlebars";
-import Block from "../../utils/Block"
-import { tpl } from './tpl';
+import Block from "../../utils/block/Block";
+import { tpl } from "./tpl";
+
+interface InputProps {
+  idInput: string;
+  classInput: string;
+  typeInput: string;
+  valueInput: string;
+  nameInput: string;
+}
 
 export class Input extends Block {
-    constructor(props: any) {
-        super("div", props);
-    }
-    
-    render() {
-        return tpl(this.props)
-    }
+  constructor(props: InputProps) {
+    super("div", props);
+  }
+
+  render() {
+    return tpl(this.props);
+  }
 }

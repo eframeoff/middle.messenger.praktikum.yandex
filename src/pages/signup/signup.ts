@@ -1,89 +1,125 @@
 import "./signup.scss";
 import { tpl } from "./tpl";
-import Block from "../../utils/Block";
+import Block from "../../utils/block/Block";
 import { Button } from "../../components/button/button";
 import { Input } from "../../components/inputs/input";
 import { Label } from "../../components/labels/label";
 import { validateFunc } from "../../utils/validate";
+import { Router } from "../../utils/router/Router";
+import RegistrApi from "../../api/registrApi";
 
-export default class signupPage extends Block {
+const router = new Router();
+
+interface DataProps {
+  loginField: string;
+  passwordField: string;
+  emailLabel: HTMLElement;
+  emailInput: HTMLElement;
+  loginLabel: HTMLElement;
+  loginInput: HTMLElement;
+  first_nameLabel: HTMLElement;
+  first_nameInput: HTMLElement;
+  second_nameLabel: HTMLElement;
+  second_nameInput: HTMLElement;
+  phoneLabel: HTMLElement;
+  phoneInput: HTMLElement;
+  passwordLabel: HTMLElement;
+  passwordInput: HTMLElement;
+  repeat_passwordLabel: HTMLElement;
+  repeat_passwordInput: HTMLElement;
+  signupButtonIn: HTMLElement;
+  signupButtonChat: HTMLElement;
+}
+
+export class SignUpPage extends Block {
   constructor() {
     super("div", {
       emailLabel: new Label({
-        classLabel: "signup__group__label",
+        classLabel: "signupLabel",
         textLabel: "Почта",
       }),
       loginLabel: new Label({
-        classLabel: "signup__group__label",
+        classLabel: "signupLabel",
         textLabel: "Логин",
       }),
       first_nameLabel: new Label({
-        classLabel: "signup__group__label",
+        classLabel: "signupLabel",
         textLabel: "Имя",
       }),
       second_nameLabel: new Label({
-        classLabel: "signup__group__label",
+        classLabel: "signupLabel",
         textLabel: "Фамилия",
       }),
       phoneLabel: new Label({
-        classLabel: "signup__group__label",
+        classLabel: "signupLabel",
         textLabel: "Телефон",
       }),
       passwordLabel: new Label({
-        classLabel: "signup__group__label",
+        classLabel: "signupLabel",
         textLabel: "Пароль",
       }),
       repeat_passwordLabel: new Label({
-        classLabel: "signup__group__label",
+        classLabel: "signupLabel",
         textLabel: "Повторите пароль",
       }),
-
       emailInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signupInput",
         typeInput: "email",
         nameInput: "email",
+        idInput: "email",
+        valueInput: "",
       }),
       loginInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signupInput",
         typeInput: "text",
         nameInput: "login",
+        idInput: "login",
+        valueInput: "",
       }),
       first_nameInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signupInput",
         typeInput: "text",
         nameInput: "first_name",
+        idInput: "first_name",
+        valueInput: "",
       }),
       second_nameInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signupInput",
         typeInput: "text",
         nameInput: "second_name",
+        idInput: "second_name",
+        valueInput: "",
       }),
       phoneInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signupInput",
         typeInput: "number",
         nameInput: "phone",
+        idInput: "phone",
+        valueInput: "",
       }),
       passwordInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signupInput",
         typeInput: "password",
         nameInput: "password",
+        idInput: "password",
+        valueInput: "",
       }),
       repeat_passwordInput: new Input({
-        classInput: "signin__group__input",
+        classInput: "signupInput",
         typeInput: "password",
         nameInput: "repeat_password",
+        idInput: "repeat_password",
+        valueInput: "",
       }),
-
       signupButtonIn: new Button({
         id: "back",
-        classButton: "signup__button__blue",
+        classButton: "signupButtonBlue",
         typeButton: "button",
         textButton: "Назад",
       }),
-
       signupButtonChat: new Button({
         id: "gochat",
-        classButton: "signup__button__white",
+        classButton: "signupButtonWhite",
         typeButton: "button",
         textButton: "Зарегистрироваться",
       }),
@@ -94,6 +130,7 @@ export default class signupPage extends Block {
       },
     });
   }
+
   check = (e: Event) => {
     const eTarget = <HTMLInputElement>e.target;
     if (eTarget.nodeName === "INPUT") {
@@ -104,62 +141,63 @@ export default class signupPage extends Block {
       });
     }
   };
+
   checkoff = (e: Event) => {
     const eTarget = <HTMLInputElement>e.target;
-    document.getElementById(`${eTarget.name}Error`).innerHTML = "";
+    document.getElementById(`${eTarget.name}Error`)!.innerHTML = "";
   };
+
+  componentDidMount() {
+    RegistrApi.getUser()
+      .then(() => {
+        router.go("/messenger");
+      })
+      .catch((data) => console.log(data));
+  }
+
   signUp = (e: Event) => {
-    if (
-      e.target === document.getElementById(this.props.signupButtonIn.props.id)
-    ) {
-      document.location = "./";
-    }
-    if (
-      e.target === document.getElementById(this.props.signupButtonChat.props.id)
-    ) {
-      const form: HTMLFormElement = document.querySelector(
-        'form[name="formDat"]'
-      );
-
-      const data: { [key: string]: string } = {};
-      const dataArray = Array.from(form!.elements) as HTMLInputElement[];
-      dataArray.forEach((element) => {
-        validateFunc({
-          value: element.value,
-          type: element.name,
-          errorMsg: `${element.name}Error`,
+    switch (e.target) {
+      case document.getElementById(this.props.signupButtonIn.props.id):
+        router.go("/");
+        break;
+      case document.getElementById(this.props.signupButtonChat.props.id): {
+        let valid = true;
+        const form: HTMLFormElement | null = document.querySelector(
+          'form[name="formDat"]'
+        )!;
+        const data: { [key: string]: string } = {};
+        const dataArray = Array.from(form!.elements) as HTMLInputElement[];
+        dataArray.forEach((element) => {
+          valid = validateFunc({
+            value: element.value,
+            type: element.name,
+            errorMsg: `${element.name}Error`,
+          })
+            ? valid
+            : false;
+          data[element.id] = element.value;
         });
-        data[element.id] = element.value;
-      });
-
-      if (form !== null) {
-        const formData: FormData = new FormData(form);
-        console.log(Object.fromEntries(formData));
+        if (data.password !== data.repeat_password) {
+          valid = false;
+          alert("Пароли не совпадают");
+        }
+        if (form !== null) {
+          const formData: FormData = new FormData(form);
+          if (valid) {
+            RegistrApi.signUp(Object.fromEntries(formData))
+              .then(() => {
+                router.go("/messenger");
+              })
+              .catch((data) => console.log(data));
+          }
+        }
+        break;
       }
     }
   };
 
   render() {
-    const data: {
-      loginField: string;
-      passwordField: string;
-      emailLabel: HTMLElement;
-      emailInput: HTMLElement;
-      loginLabel: HTMLElement;
-      loginInput: HTMLElement;
-      first_nameLabel: HTMLElement;
-      first_nameInput: HTMLElement;
-      second_nameLabel: HTMLElement;
-      second_nameInput: HTMLElement;
-      phoneLabel: HTMLElement;
-      phoneInput: HTMLElement;
-      passwordLabel: HTMLElement;
-      passwordInput: HTMLElement;
-      repeat_passwordLabel: HTMLElement;
-      repeat_passwordInput: HTMLElement;
-      signupButtonIn: HTMLElement;
-      signupButtonChat: HTMLElement;
-    } = {
+    const data: DataProps = {
       loginField: "Логин",
       passwordField: "Пароль",
       emailLabel: this.props.emailLabel.render(),
