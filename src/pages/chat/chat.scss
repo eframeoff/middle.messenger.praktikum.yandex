@@ -1,0 +1,137 @@
+$var1: #fcfcfc;
+$var2: #e0e0e0;
+$var3: #2d9cdb;
+$var4: #ededed;
+
+.chat {
+  display: flex;
+  height: 100%;
+  margin: 20px 20px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    height: 100vh;
+    background-color: $var1;
+
+    &__search {
+      width: 100%;
+      background-color: transparent;
+      display: flex;
+    }
+
+    &__search input {
+      width: 70%;
+      border: none;
+      border-bottom: 1px solid $var2;
+      border-radius: 40px;
+      background-color: $var4;
+      margin-left: 10px;
+      padding-left: 10px;
+    }
+
+    &__users {
+      padding-top: 10vh;
+
+      &__unit {
+        padding-top: 20px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+    }
+  }
+
+  &__messages {
+    width: 75%;
+    margin: 0 20px;
+
+    &__name {
+      text-align: center;
+    }
+    &__dialog__input {
+      width: 100%;
+      height: 30px;
+
+      border: none;
+      margin-bottom: 10px;
+      border-bottom: 1px solid $var2;
+      border-radius: 40px;
+      background-color: $var4;
+      padding: 0 20px;
+    }
+
+    &__menu {
+      display: flex;
+      max-width: 100%;
+
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+    }
+
+    &__dialog {
+      padding: 20px 0;
+    }
+
+    &__form {
+      position: absolute;
+      bottom: 5vh;
+      width: 50vw;
+    }
+
+    &__error {
+      color: red;
+      left: 20px;
+      top: 30px;
+      position: absolute;
+    }
+  }
+}
+.avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+
+  & span {
+    width: max-content;
+    background-color: $var4;
+    border-radius: 40px;
+    padding: 5px 10px;
+  }
+}
+
+.returnToSignin {
+  font-weight: bold;
+  width: 52px;
+  height: 28px;
+  color: white;
+  text-decoration: none;
+  background: $var3;
+  transition: 0.2s;
+  border: none;
+  border-radius: 40px;
+}
+
+.chat__messages__form {
+  display: flex;
+}
+
+.message_chat {
+  font-weight: bold;
+  width: 100px;
+  height: 30px;
+  color: white;
+  text-decoration: none;
+  background: $var3;
+  transition: 0.2s;
+  border: none;
+  border-radius: 40px;
+}

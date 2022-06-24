@@ -1,0 +1,92 @@
+$var1: #9e9e9e;
+$var2: #2d9cdb;
+$var3: #e0e0e0;
+
+* {
+  font-family: Roboto, sans-serif;
+}
+
+.container {
+  max-width: 640px;
+  margin: auto;
+  height: auto;
+}
+
+.signin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__title {
+    text-align: center;
+    margin: 0 0 60px;
+  }
+
+  &__group {
+    position: relative;
+    margin-bottom: 30px;
+    padding: 0 0 20;
+
+    &__label {
+      position: absolute;
+      color: $var1;
+      bottom: 45;
+    }
+
+    &__input {
+      width: 350px;
+      border: none;
+      border-bottom: 1px solid $var3;
+      background-color: transparent;
+    }
+
+    &__error {
+      position: absolute;
+      width: 350px;
+      color: red;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      font-weight: bold;
+      width: 160px;
+      height: 50px;
+      height: 30px;
+      text-decoration: none;
+      transition: 0.2s;
+      border-radius: 40px;
+    }
+
+    &__blue {
+      color: white;
+      background: $var2;
+      border: 2px solid $var2;
+
+      &:hover {
+        background: white;
+        color: $var2;
+        border-color: $var2;
+      }
+    }
+
+    &__white {
+      color: $var2;
+      background: white;
+      border: 2px solid $var2;
+
+      &:hover {
+        color: white;
+        background: $var2;
+        border: 2px solid $var2;
+      }
+    }
+  }
+}
