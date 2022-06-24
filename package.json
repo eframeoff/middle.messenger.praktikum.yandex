@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "parcel static/index.html -p 3000",
-    "start": "node app.js",
+    "start": "parcel build static/index.html && node app.js",
     "build": "parcel build static/*.html",
     "stylelint": "stylelint src/pages/**/*.scss --custom-syntax postcss-scss",
     "eslint": "eslint src/pages/**/*.ts",
