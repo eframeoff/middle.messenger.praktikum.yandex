@@ -5,12 +5,10 @@ const httpUsers = new HTTPTransport("https://ya-praktikum.tech/api/v2/user");
 
 class ChatApi {
   addChat(data: object) {
-    console.log(data);
     return http.post("", { data });
   }
 
   getChatUsers(id: string) {
-    console.log(id);
     return http.get(`/${id}/users`, {});
   }
 
@@ -27,7 +25,6 @@ class ChatApi {
   }
 
   findUsers(data: object) {
-    console.log(data);
     return httpUsers.post("/search", { data });
   }
 
@@ -52,7 +49,6 @@ class ChatApi {
   }
 
   saveUserData(data: object) {
-    console.log(data);
     return httpUsers.put("/profile", { data });
   }
 }

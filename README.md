@@ -22,13 +22,13 @@ npm install
 npm run build
 ```
 
-Запуск проекта на localhost:3000 
+Запуск проекта в режиме разработки (port:3000)
 
 ```bash
 npm run dev
 ```
 
-Запуск node server
+Запуск node server (port:3000)
 
 ```bash
 npm run start
@@ -38,4 +38,10 @@ npm run start
 
 ```bash
 npm run test
+```
+
+Запуск линтеров
+
+```bash
+npm run lint
 ```

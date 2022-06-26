@@ -99,7 +99,6 @@ export class SignInPage extends Block {
         router.go("/sign-up");
         break;
       case document.getElementById(this.props.signinButton.props.id): {
-        console.log('sddss')
         let valid = true;
         const form: HTMLFormElement | null = document.querySelector(
           'form[name="formDat"]'

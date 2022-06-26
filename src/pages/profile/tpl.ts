@@ -5,7 +5,7 @@ const source = `<div class="container">
 <div class="profile">
   <div class="profile__main">
     <a href="{{avatar}}" class="profile__main__logo">
-      <img id="avatarProfile" src="{{avatar}}" alt="Photo profile" />
+      <img id="avatarProfile" class="avatarProfile" src="{{avatar}}" alt="Photo profile" />
     </a>
     <p class="displayName">{{userData.display_name}}</p>
     {{{profileButton}}}

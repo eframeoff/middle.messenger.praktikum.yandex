@@ -1,4 +1,5 @@
 import "./chat.scss";
+import chatAvatar from "../../images/chat.jpg";
 import { tpl } from "./tpl";
 import Block from "../../utils/block/Block";
 import { Button } from "../../components/button/button";
@@ -113,7 +114,7 @@ export class ChatPage extends Block {
         classInput: "inputModal",
         typeInput: "text",
         typeButton: "button",
-        classButtonAdd: "addChat",
+        classButtonAdd: "addChatModal",
         textButtonAdd: "Добавить чат",
         classButtonClose: "closeModule",
         textButtonClose: "Закрыть",
@@ -127,7 +128,7 @@ export class ChatPage extends Block {
         classInput: "inputModal",
         typeInput: "text",
         typeButton: "button",
-        classButtonAdd: "addUser",
+        classButtonAdd: "addUserModal",
         textButtonAdd: "Добавить пользователя",
         classButtonClose: "closeModule",
         textButtonClose: "Закрыть",
@@ -141,7 +142,7 @@ export class ChatPage extends Block {
         classInput: "inputModal",
         typeInput: "text",
         typeButton: "button",
-        classButtonAdd: "addUser",
+        classButtonAdd: "addUserModal",
         textButtonAdd: "Удалить пользователя",
         classButtonClose: "closeModule",
         textButtonClose: "Закрыть",
@@ -182,7 +183,7 @@ export class ChatPage extends Block {
   addUser() {
     const addUser = document.getElementById(
       this.props.userModal.props.idInput
-    )!.value;
+    )?.value;
     const data = {
       login: addUser,
     };
@@ -195,7 +196,7 @@ export class ChatPage extends Block {
         ChatApi.addUser(datas)
           .then(() => {
             ChatApi.getChatUsers(this.props.curChat.id).then((data: any) => {
-              this.props.curChat.contacts = JSON.parse(data.response);
+              this.props.curChat.users = JSON.parse(data.response);
               this.setProps(this.props);
             });
           })
@@ -229,7 +230,7 @@ export class ChatPage extends Block {
     chats.forEach((chatcard: any) => {
       this.props.chatcards[chatcard.id] = new ChatCard({
         id: chatcard.id,
-        avatar: chatcard.avatar,
+        chatAvatar: chatAvatar,
         nameUser: chatcard.title,
         lastMessage: chatcard.lastMessage,
       });
@@ -240,17 +241,19 @@ export class ChatPage extends Block {
     });
   }
 
-  deleteUser(e: any) {
+  deleteUser(e: Event) {
     const chatId = this.props.curChat.id;
-    const userDelete = e.target.parentElement.id;
+    const userDelete = e.target!.parentElement.id;
     const data = {
       users: [userDelete],
       chatId: chatId,
     };
     ChatApi.deleteUsers(data).then(() => {
-      ChatApi.getChatUsers(chatId).then((data: any) => {
-        this.props.curChat.contacts = JSON.parse(data.response);
-        this.setProps(this.props);
+      ChatApi.getChats().then(() => {
+        ChatApi.getChatUsers(chatId).then((data: XMLHttpRequest) => {
+          this.props.curChat.users = JSON.parse(data.response);
+          this.setProps(this.props);
+        });
       });
     });
   }
@@ -263,6 +266,9 @@ export class ChatPage extends Block {
       .then(() => {
         ChatApi.getChats().then((data: any) => {
           this.setChatProps(data);
+          this.props.addChatVisible = false;
+          this.props.addSettingsVisible = false;
+          this.props.curChat = null;
           this.setProps(this.props);
         });
       })
@@ -272,21 +278,20 @@ export class ChatPage extends Block {
   openChat(e: Event) {
     this.props.addSettingsVisible = true;
     this.props.addChatVisible = false;
-    this.props.curChat = this.props.chatcards[e.target!.parentElement.id].props;
+    this.props.curChat = this.props.chatcards[e.target?.parentElement.id].props;
     this.props.chatAvatar = this.props.curChat.avatar;
     this.props.chatName = this.props.curChat.nameUser;
     ChatApi.getChatUsers(this.props.curChat.id)
-      .then((data: XMLHttpRequest) => {
+      .then((data: any) => {
         this.props.curChat.users = JSON.parse(data.response);
         this.setProps(this.props);
       })
       .catch((data) => console.log(data));
     ChatApi.getToken(this.props.curChat.id)
-      .then((data: XMLHttpRequest) => {
+      .then((data: any) => {
         this.props.curChat.token = JSON.parse(data.response).token;
         this.setProps(this.props);
         const chatmessage = document.getElementById("chats");
-        console.log(this.props);
         const socket = new SocketModule(
           this.props.userData.id,
           this.props.curChat.id,
@@ -294,18 +299,34 @@ export class ChatPage extends Block {
           chatmessage
         );
         const messageInput = document.getElementById("messageInput");
-        console.log(messageInput);
         const messageSendButton = document.getElementById(
           this.props.sendMessageButton.props.id
         );
         messageSendButton?.addEventListener("click", () => {
-          socket.send(
-            JSON.stringify({
-              content: messageInput?.value,
-              type: "message",
-            })
+          const form: HTMLFormElement | null = document.querySelector(
+            'input[name="message"]'
           );
-          messageInput!.value = "";
+          let valid = false;
+          const dataArray = [form];
+          dataArray.forEach((element) => {
+            valid = validateFunc({
+              value: element?.value,
+              type: element?.name,
+              errorMsg: `${element?.name}Error`,
+            })
+              ? true
+              : false;
+          });
+
+          if (valid) {
+            socket.send(
+              JSON.stringify({
+                content: messageInput?.value,
+                type: "message",
+              })
+            );
+            messageInput!.value = "";
+          }
         });
       })
       .catch((data) => console.log(data));
@@ -320,7 +341,7 @@ export class ChatPage extends Block {
   }
 
   send = (e: Event) => {
-    if (e.target!.classList.contains("avatar")) {
+    if (e.target?.classList.contains("avatar")) {
       this.openChat(e);
     }
 
@@ -358,26 +379,6 @@ export class ChatPage extends Block {
       case document.getElementById(this.props.userModal.props.idClose):
         this.closeUserModal();
         break;
-      case document.getElementById(this.props.sendMessageButton.props.id): {
-        const form: HTMLFormElement | null = document.querySelector(
-          'form[name="formDat"]'
-        );
-        const data: { [key: string]: string } = {};
-        const dataArray = Array.from(form!.elements) as HTMLInputElement[];
-        dataArray.forEach((element) => {
-          validateFunc({
-            value: element.value,
-            type: element.name,
-            errorMsg: `${element.name}Error`,
-          });
-          data[element.id] = element.value;
-        });
-
-        if (form !== null) {
-          const formData: FormData = new FormData(form);
-          console.log(Object.fromEntries(formData));
-        }
-      }
     }
   };
 
@@ -400,7 +401,7 @@ export class ChatPage extends Block {
       chatMU: this.props.chatMU,
       curChat: this.props.curChat,
       chatName: this.props.chatName,
-      chatAvatar: this.props.chatAvatar,
+      chatAvatar: chatAvatar,
       usersChat: this.props.usersChat,
       sendMessageButton: this.props.sendMessageButton.render(),
       sendMessageInput: this.props.sendMessageInput.render(),

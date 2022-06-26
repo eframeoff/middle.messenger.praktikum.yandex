@@ -188,7 +188,8 @@ export class SignUpPage extends Block {
               .then(() => {
                 router.go("/messenger");
               })
-              .catch((data) => console.log(data));
+              .catch((data) => {
+                console.log(data)});
           }
         }
         break;

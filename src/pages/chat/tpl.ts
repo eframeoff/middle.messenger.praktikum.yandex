@@ -15,9 +15,12 @@ const source = `
   <div class="chat__messages">
     <div class="chat__messages__menu">
       {{#if addSettingsVisible}}
+      {{#unless addChatVisible}}
       <img class="chatAvatar" id="chatAvatar" src="{{chatAvatar}}" alt="" />
-      <div class="chat__messages__name">{{chatName}}</div>
-      {{{settingsChatButton}}} {{/if}}
+      <div class="chat__messages__name">Чат: {{chatName}}</div>
+      {{{settingsChatButton}}}
+      {{/unless}}
+      {{/if}}
     </div>
     {{#if addChatVisible}}
     <div class="chat__messages__settings">
@@ -35,10 +38,12 @@ const source = `
     <div class="chat__messages__dialog" id="chats">
       {{{Message}}}
     {{#if addSettingsVisible}}
+    {{#unless addChatVisible}}
     <form class="chat__messages__form" name="formDat">
         {{{sendMessageInput}}} {{{sendMessageButton}}}
         <div class="chat__messages__error" id="messageError"></div>
     </form>
+    {{/unless}}
     {{/if}}
     </div>
   </div>

@@ -55,7 +55,6 @@ export default class HTTPTransport {
 
   request(url: string, options: HTTPOptions) {
     const { data = {}, method = Methods.Get, timeout = 5000 } = options;
-    console.log(options)
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
@@ -64,10 +63,8 @@ export default class HTTPTransport {
       xhr.open(method, getReq ? `${url}${queryStringify(data)}` : url);
 
       if (data.headers === undefined) {
-        console.log('json')
         xhr.setRequestHeader("Content-Type", "application/json");
       }
-      console.log(data.headers)
 
 
       xhr.withCredentials = true;
@@ -88,7 +85,6 @@ export default class HTTPTransport {
         if (data.headers !== undefined) {
           xhr.send(data.data);
         } else {
-          console.log(JSON.stringify(data))
           xhr.send(JSON.stringify(data));
         }
       }

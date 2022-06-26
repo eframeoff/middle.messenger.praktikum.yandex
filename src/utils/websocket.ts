@@ -58,8 +58,6 @@ export default class SocketModule {
     const data = JSON.parse(event.data);
     if (Array.isArray(data)) {
       data.reverse().forEach((element: Message) => {
-        console.log(element);
-
         this.renderMessage(element);
       });
     } else if (data.type === "user connected") {
@@ -70,7 +68,6 @@ export default class SocketModule {
   }
 
   renderMessage(data: any) {
-    console.log(data);
     const message = new Message({
       id: data.id,
       text: data.content,

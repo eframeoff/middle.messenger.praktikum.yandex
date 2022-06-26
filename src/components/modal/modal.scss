@@ -14,10 +14,10 @@ $var3: #e0e0e0;
   background-color: transparent;
 }
 
-.addUser,
-.addChat {
+.addUserModal,
+.addChatModal {
   font-weight: bold;
-  width: 160px;
+  width: 200px;
   height: 50px;
   height: 30px;
   text-decoration: none;
@@ -28,8 +28,8 @@ $var3: #e0e0e0;
   border: 2px solid $var2;
 }
 
-.addUser:hover,
-.addChat:hover {
+.addUserModal:hover,
+.addChatModal:hover {
   background: white;
   color: $var2;
   border-color: $var2;

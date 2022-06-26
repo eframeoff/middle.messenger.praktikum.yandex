@@ -30,15 +30,14 @@ const ERROR_MESSAGES = {
 
 interface Params {
   value: string;
-  type: string;
+  type?: string;
   errorMsg: string;
 }
 
 export function validateFunc(params: Params) {
-  let isValid: Boolean = false;
+  let isValid: any = false;
   const { value, type, errorMsg } = params;
   const error = document.getElementById(errorMsg);
-  console.log(params.value)
   switch (type) {
     case Type.Login:
       isValid = REG_EXPS.login.test(value);
@@ -70,6 +69,5 @@ export function validateFunc(params: Params) {
     default:
       isValid = false;
   }
-  console.log(isValid)
   return isValid;
 }

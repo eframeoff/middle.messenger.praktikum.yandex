@@ -60,9 +60,7 @@ export default class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidMount(oldProps?: object) {
-    console.log(oldProps);
-  }
+  componentDidMount() {}
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -77,8 +75,7 @@ export default class Block {
   }
 
   componentDidUpdate(oldProps: any, newProps: any) {
-    console.log(oldProps, newProps);
-    return true;
+    return oldProps !== newProps;
   }
 
   setProps = (nextProps: any) => {

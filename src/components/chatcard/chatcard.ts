@@ -3,7 +3,7 @@ import { tpl } from "./tpl";
 
 interface ChatCardProps {
   id: string;
-  avatar: HTMLImageElement;
+  chatAvatar: HTMLImageElement;
   nameUser: string;
   lastMessage: string;
 }

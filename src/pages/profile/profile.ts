@@ -6,8 +6,8 @@ import LoginApi from "../../api/loginApi";
 import { Router } from "../../utils/router/Router";
 
 interface DataProps {
-  avatar: any;
-  userData: any;
+  avatar: string;
+  userData: object;
   returnToChatButton: HTMLElement;
   profileButton: HTMLElement;
 } 

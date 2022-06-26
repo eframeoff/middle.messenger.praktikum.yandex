@@ -140,6 +140,7 @@ export class ProfileEditPage extends Block {
       })
         .then(() => {
           alert('Аватар успешно изменен');
+          this.componentDidMount();
         })
         .catch((data) => console.log(data));
     }

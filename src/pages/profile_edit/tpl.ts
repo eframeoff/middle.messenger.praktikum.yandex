@@ -6,7 +6,7 @@ const source = `<div class="container">
 <div class="profile_edit">
   <div class="profile_edit__main">
     <a href="{{image}}" class="profile_edit__main__logo">
-      <img id="avatarEditProfile" src="{{image}}" alt="Photo profile" name="avatar" />
+      <img id="avatarEditProfile" class="avatarEditProfile" src="{{image}}" alt="Photo profile" name="avatar" />
     </a>
     <form
       class="user__changeAvatar"
