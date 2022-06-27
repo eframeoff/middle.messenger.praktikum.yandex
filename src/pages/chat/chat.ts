@@ -8,9 +8,9 @@ import { Modal } from "../../components/modal/modal";
 import { ChatCard } from "../../components/chatcard/chatcard";
 import { validateFunc } from "../../utils/validate";
 import { Router } from "../../utils/router/Router";
-import SocketModule from "../../utils/websocket";
 import LoginApi from "../../api/loginApi";
 import ChatApi from "../../api/chatApi";
+import { Message } from "../../components/message/message";
 
 interface DataProps {
   userButton: HTMLElement;
@@ -38,6 +38,8 @@ interface DataProps {
 const router = new Router();
 
 export class ChatPage extends Block {
+  private socket: WebSocket;
+
   constructor() {
     super("div", {
       userButton: new Button({
@@ -275,6 +277,15 @@ export class ChatPage extends Block {
       .catch(() => console.log(data));
   }
 
+  renderMessage(data: any) {
+    const chatBody = document.getElementById("chats");
+    const message = new Message({
+      id: data.id,
+      text: data.content,
+    });
+    chatBody?.insertBefore(message.getContent(), chatBody.firstChild);
+  }
+
   openChat(e: Event) {
     this.props.addSettingsVisible = true;
     this.props.addChatVisible = false;
@@ -291,13 +302,49 @@ export class ChatPage extends Block {
       .then((data: any) => {
         this.props.curChat.token = JSON.parse(data.response).token;
         this.setProps(this.props);
-        const chatmessage = document.getElementById("chats");
-        const socket = new SocketModule(
-          this.props.userData.id,
-          this.props.curChat.id,
-          this.props.curChat.token,
-          chatmessage
+        this.socket = new WebSocket(
+          `wss://ya-praktikum.tech/ws/chats/${this.props.userData.id}/${this.props.curChat.id}/${this.props.curChat.token}`
         );
+        this.socket.addEventListener("open", () => {
+          console.log("open");
+          this.socket.send(
+            JSON.stringify({
+              content: "0",
+              type: "get old",
+            })
+          );
+        });
+
+        this.socket.addEventListener("error", (event) => {
+          console.log("error");
+          console.log("Ошибка: ", event.message);
+        });
+
+        this.socket.addEventListener("close", (event) => {
+          console.log("close");
+          if (event.wasClean) {
+            console.log("Соединение закрыто чисто");
+          } else {
+            console.log("Обрыв соединения");
+          }
+          console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+        });
+
+        this.socket.addEventListener("message", (event) => {
+          console.log("message");
+          console.log("Получены данные", event.data);
+          const data = JSON.parse(event.data);
+          if (Array.isArray(data)) {
+            data.reverse().forEach((element: Message) => {
+              this.renderMessage(element);
+            });
+          } else if (data.type === "user connected") {
+            console.log("user connected");
+          } else if (data.type === "message") {
+            this.renderMessage(data);
+          }
+        });
+
         const messageInput = document.getElementById("messageInput");
         const messageSendButton = document.getElementById(
           this.props.sendMessageButton.props.id
@@ -319,7 +366,7 @@ export class ChatPage extends Block {
           });
 
           if (valid) {
-            socket.send(
+            this.socket.send(
               JSON.stringify({
                 content: messageInput?.value,
                 type: "message",
