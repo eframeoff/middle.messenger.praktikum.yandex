@@ -164,7 +164,9 @@ export class ProfileEditPage extends Block {
   saveUserData(data: any) {
     ChatApi.saveUserData(data)
       .then(() => {
+        this.componentDidMount();
         alert("Данные пользователя успешно сохранены");
+        this.setProps(this.props);
       })
       .catch((data) => console.log(data));
   }
