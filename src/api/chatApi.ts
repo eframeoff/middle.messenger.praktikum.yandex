@@ -8,26 +8,6 @@ class ChatApi {
     return http.post("", { data });
   }
 
-  getChatUsers(id: string) {
-    return http.get(`/${id}/users`, {});
-  }
-
-  getChats() {
-    return http.get("/", {});
-  }
-
-  logOut() {
-    return http.post("/logout");
-  }
-
-  getToken(id: string) {
-    return http.post(`/token/${id}`);
-  }
-
-  findUsers(data: object) {
-    return httpUsers.post("/search", { data });
-  }
-
   addUser(data: object) {
     return http.put("/users", { data });
   }
@@ -40,6 +20,22 @@ class ChatApi {
     return http.delete("/users", { data });
   }
 
+  getChats() {
+    return http.get("/", {});
+  }
+
+  getChatUsers(id: string) {
+    return http.get(`/${id}/users`, {});
+  }
+
+  getToken(id: string) {
+    return http.post(`/token/${id}`);
+  }
+
+  findUsers(data: object) {
+    return httpUsers.post("/search", { data });
+  }
+
   changeUserAvatar(data: object) {
     return httpUsers.put("/profile/avatar", { data });
   }
@@ -50,6 +46,10 @@ class ChatApi {
 
   saveUserData(data: object) {
     return httpUsers.put("/profile", { data });
+  }
+
+  logOut() {
+    return http.post("/logout");
   }
 }
 

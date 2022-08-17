@@ -12,15 +12,16 @@ import LoginApi from "../../api/loginApi";
 import ChatApi from "../../api/chatApi";
 import { Message } from "../../components/message/message";
 
-interface DataProps {
-  userButton: HTMLElement;
+interface IChatProps {
+  deleteUserButton: HTMLElement;
   curChat: HTMLElement;
   chatMU: HTMLElement;
+  lastMessage: HTMLElement;
   chatName: HTMLElement;
   chatAvatar: HTMLImageElement;
   usersChat: HTMLElement;
   sendMessageButton: HTMLElement;
-  sendMessageInput: HTMLElement;
+  sendMessageInput: any;
   addChatButton: HTMLElement;
   chatModal: HTMLElement;
   userModal: HTMLElement;
@@ -28,7 +29,6 @@ interface DataProps {
   deleteChatButton: HTMLElement;
   addChatVisible: HTMLElement;
   settingsChatButton: HTMLElement;
-  deleteUserButton: HTMLElement;
   exitButton: HTMLElement;
   profileButton: HTMLElement;
   addSettingsVisible: HTMLElement;
@@ -42,7 +42,7 @@ export class ChatPage extends Block {
 
   constructor() {
     super("div", {
-      userButton: new Button({
+      deleteUserButton: new Button({
         id: "userDelete",
         classButton: "userDelete",
         typeButton: "button",
@@ -63,7 +63,7 @@ export class ChatPage extends Block {
       sendMessageButton: new Button({
         id: "chatSendMessage",
         classButton: "messageChat",
-        typeButton: "button",
+        typeButton: "submit",
         textButton: "Отправить",
       }),
       addChatButton: new Button({
@@ -83,12 +83,6 @@ export class ChatPage extends Block {
         classButton: "addUser",
         typeButton: "button",
         textButton: "Добавить пользователя",
-      }),
-      deleteUserButton: new Button({
-        id: "chatDeleteUser",
-        classButton: "deleteUser",
-        typeButton: "button",
-        textButton: "Удалить пользователя",
       }),
       deleteChatButton: new Button({
         id: "chatDeleteChat",
@@ -123,6 +117,7 @@ export class ChatPage extends Block {
         idAdd: "addChat",
         idClose: "closeModule",
         idInput: "inputChat",
+        modalError: "addChatError",
       }),
       userModal: new Modal({
         textModal: "Добавить пользователя",
@@ -137,27 +132,15 @@ export class ChatPage extends Block {
         idAdd: "addUser",
         idClose: "closeModuleU",
         idInput: "inputUser",
-      }),
-      deleteUserModal: new Modal({
-        textModal: "Удалить пользователя",
-        idModal: "deleteUserModal",
-        classInput: "inputModal",
-        typeInput: "text",
-        typeButton: "button",
-        classButtonAdd: "addUserModal",
-        textButtonAdd: "Удалить пользователя",
-        classButtonClose: "closeModule",
-        textButtonClose: "Закрыть",
-        idAdd: "deleteUser",
-        idClose: "closeModuleD",
-        idInput: "inputUserD",
+        modalError: "addUserError",
       }),
       chatMU: [],
       chatcards: {},
       addChatVisible: false,
       addSettingsVisible: false,
       events: {
-        click: (e: Event) => this.send(e),
+        click: (e: Event) => this.clickButton(e),
+        submit: (e: Event) => this.sendMessage(e),
       },
     });
   }
@@ -183,8 +166,10 @@ export class ChatPage extends Block {
   }
 
   addUser() {
-    const addUser = document.getElementById(
-      this.props.userModal.props.idInput
+    const addUser = (
+      document.getElementById(
+        this.props.userModal.props.idInput
+      ) as HTMLInputElement
     )?.value;
     const data = {
       login: addUser,
@@ -204,12 +189,18 @@ export class ChatPage extends Block {
           })
           .catch((data) => console.log(data));
       })
-      .catch((data) => console.log(data));
+      .catch(
+        () =>
+          (document.getElementById("addUserError")!.innerHTML =
+            "Пользователь не найден")
+      );
   }
 
   addChat() {
-    const title = document.getElementById(
-      this.props.chatModal.props.idInput
+    const title = (
+      document.getElementById(
+        this.props.chatModal.props.idInput
+      ) as HTMLInputElement
     )?.value;
     const data = {
       title,
@@ -234,7 +225,7 @@ export class ChatPage extends Block {
         id: chatcard.id,
         chatAvatar: chatAvatar,
         nameUser: chatcard.title,
-        lastMessage: chatcard.lastMessage,
+        lastMessage: chatcard.last_message ? chatcard.last_message.content : "",
       });
     });
     this.props.chatMU = [];
@@ -245,7 +236,7 @@ export class ChatPage extends Block {
 
   deleteUser(e: Event) {
     const chatId = this.props.curChat.id;
-    const userDelete = e.target!.parentElement.id;
+    const userDelete = (e.target! as HTMLElement).parentElement!.id;
     const data = {
       users: [userDelete],
       chatId: chatId,
@@ -279,9 +270,17 @@ export class ChatPage extends Block {
 
   renderMessage(data: any) {
     const chatBody = document.getElementById("chats");
+    const now = new Date(data.time);
+    const hours = now.getHours() >= 10 ? now.getHours() : `0${now.getHours()}`;
+    const minutes =
+      now.getMinutes() >= 10 ? now.getMinutes() : `0${now.getMinutes()}`;
+
+    const time = hours + `:` + minutes;
     const message = new Message({
       id: data.id,
       text: data.content,
+      outerMessage: data.user_id !== this.props.userData.id,
+      time: time,
     });
     chatBody?.insertBefore(message.getContent(), chatBody.firstChild);
   }
@@ -289,7 +288,8 @@ export class ChatPage extends Block {
   openChat(e: Event) {
     this.props.addSettingsVisible = true;
     this.props.addChatVisible = false;
-    this.props.curChat = this.props.chatcards[e.target?.parentElement.id].props;
+    this.props.curChat =
+      this.props.chatcards[(e.target as HTMLElement).parentElement!.id].props;
     this.props.chatAvatar = this.props.curChat.avatar;
     this.props.chatName = this.props.curChat.nameUser;
     ChatApi.getChatUsers(this.props.curChat.id)
@@ -305,6 +305,7 @@ export class ChatPage extends Block {
         this.socket = new WebSocket(
           `wss://ya-praktikum.tech/ws/chats/${this.props.userData.id}/${this.props.curChat.id}/${this.props.curChat.token}`
         );
+
         this.socket.addEventListener("open", () => {
           console.log("open");
           this.socket.send(
@@ -315,7 +316,7 @@ export class ChatPage extends Block {
           );
         });
 
-        this.socket.addEventListener("error", (event) => {
+        this.socket.addEventListener("error", (event: any) => {
           console.log("error");
           console.log("Ошибка: ", event.message);
         });
@@ -344,39 +345,37 @@ export class ChatPage extends Block {
             this.renderMessage(data);
           }
         });
-
-        const messageInput = document.getElementById("messageInput");
-        const messageSendButton = document.getElementById(
-          this.props.sendMessageButton.props.id
-        );
-        messageSendButton?.addEventListener("click", () => {
-          const form: HTMLFormElement | null = document.querySelector(
-            'input[name="message"]'
-          );
-          let valid = false;
-          const dataArray = [form];
-          dataArray.forEach((element) => {
-            valid = validateFunc({
-              value: element?.value,
-              type: element?.name,
-              errorMsg: `${element?.name}Error`,
-            })
-              ? true
-              : false;
-          });
-
-          if (valid) {
-            this.socket.send(
-              JSON.stringify({
-                content: messageInput?.value,
-                type: "message",
-              })
-            );
-            messageInput!.value = "";
-          }
-        });
       })
       .catch((data) => console.log(data));
+  }
+
+  sendMessage(e: Event) {
+    e.preventDefault();
+    const messageInput = document.getElementById("messageInput");
+    const form: HTMLFormElement | null = document.querySelector(
+      'input[name="message"]'
+    );
+    let valid = false;
+    const dataArray = [form];
+    dataArray.forEach((element) => {
+      valid = validateFunc({
+        value: element?.value,
+        type: element?.name,
+        errorMsg: `${element?.name}Error`,
+      })
+        ? true
+        : false;
+    });
+
+    if (valid) {
+      this.socket.send(
+        JSON.stringify({
+          content: (messageInput as HTMLInputElement)?.value,
+          type: "message",
+        })
+      );
+      (messageInput! as HTMLInputElement).value = "";
+    }
   }
 
   exitChat() {
@@ -387,9 +386,13 @@ export class ChatPage extends Block {
       .catch((data) => console.log(data));
   }
 
-  send = (e: Event) => {
-    if (e.target?.classList.contains("avatar")) {
+  clickButton = (e: any) => {
+    if (e.target.classList.contains("avatar")) {
       this.openChat(e);
+    }
+
+    if (e.target.id === this.props.deleteUserButton.props.id) {
+      this.deleteUser(e);
     }
 
     switch (e.target) {
@@ -413,9 +416,6 @@ export class ChatPage extends Block {
         break;
       case document.getElementById(this.props.userModal.props.idAdd):
         this.addUser();
-        break;
-      case document.getElementById(this.props.userButton.props.id):
-        this.deleteUser(e);
         break;
       case document.getElementById(this.props.deleteChatButton.props.id):
         this.deleteChat();
@@ -444,8 +444,9 @@ export class ChatPage extends Block {
   }
 
   render() {
-    const data: DataProps = {
+    const data: IChatProps = {
       chatMU: this.props.chatMU,
+      lastMessage: this.props.lastMessage,
       curChat: this.props.curChat,
       chatName: this.props.chatName,
       chatAvatar: chatAvatar,
@@ -459,11 +460,10 @@ export class ChatPage extends Block {
       deleteChatButton: this.props.deleteChatButton.render(),
       addChatVisible: this.props.addChatVisible,
       settingsChatButton: this.props.settingsChatButton.render(),
-      deleteUserButton: this.props.deleteUserButton.render(),
       exitButton: this.props.exitButton.render(),
       profileButton: this.props.profileButton.render(),
       addSettingsVisible: this.props.addSettingsVisible,
-      userButton: this.props.userButton.render(),
+      deleteUserButton: this.props.deleteUserButton.render(),
       findInput: this.props.findInput.render(),
     };
 

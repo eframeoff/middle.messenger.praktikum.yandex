@@ -20,8 +20,8 @@ describe("Тестируем роутер", () => {
     })
     it("Проверяем регистрирование страниц", function() {
         router.use("/signin", `<div>Signin page</div>`)
-        router.use("/sign-in", `<div>Signup page</div>`)
-        router.use("/sign-in", `<div>Chat page</div>`);
+        router.use("/signup", `<div>Signup page</div>`)
+        router.use("/chat", `<div>Chat page</div>`);
         assert.lengthOf(router.routes, 3)
     })
 })

@@ -2,7 +2,7 @@ import Block from "../../utils/block/Block";
 import { tpl } from "./tpl";
 import "./modal.scss";
 
-interface ModalProps {
+interface IModalProps {
   idModal: string;
   textModal: string;
   idInput: string;
@@ -15,10 +15,11 @@ interface ModalProps {
   idClose: string;
   classButtonClose: string;
   textButtonClose: string;
+  modalError: string;
 }
 
 export class Modal extends Block {
-  constructor(props: ModalProps) {
+  constructor(props: IModalProps) {
     super("div", props);
   }
 

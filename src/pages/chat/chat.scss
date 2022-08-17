@@ -7,6 +7,12 @@ body {
   margin: 0;
 }
 
+#root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
 .users {
   font-weight: bold;
 }
@@ -21,12 +27,59 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  margin-right: 10px;
+}
+
+.time {
+  font-size: 10px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.noopenchat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.avatar {
+  display: flex;
+  align-items: flex-end;
+}
+
+.avatar:hover {
+  background-color: $var4;
+}
+
+.preview__name {
+  font-size: small;
+  font-weight: bold;
+}
+
+.preview__lastmessage {
+  font-size: smaller;
 }
 
 .message {
   display: flex;
-  flex-direction: column;
   padding-top: 10px;
+  margin-right: 10px;
+  justify-content: flex-end;
+}
+
+.message .text {
+  background-color: $var3;
+  color: white;
+}
+
+.message_outer {
+  justify-content: flex-start;
+}
+
+.message_outer .text {
+  background-color: $var4;
+  color: black;
 }
 
 .text_break-word {
@@ -57,7 +110,6 @@ body {
 
 .addUser,
 .deleteChat,
-.deleteUser,
 .exitChat,
 .goToProfile,
 .messageChat,
@@ -76,9 +128,13 @@ body {
 
 .messageChat {
   margin-bottom: 0;
-  width: 100px;
+  width: 10vw;
   border: none;
   border-radius: 40px;
+}
+
+.messageChat:hover {
+  background-color: #267eb1;
 }
 
 .exitChat,
@@ -101,7 +157,6 @@ body {
 .addChat:hover,
 .addUser:hover,
 .deleteChat:hover,
-.deleteUser:hover,
 .exitChat:hover,
 .goToProfile:hover,
 .addSettings:hover {
@@ -125,11 +180,10 @@ body {
   height: 100%;
 
   &__list {
-    padding: 0 20px;
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
     width: 25%;
-    height: 100vh;
     background-color: $var1;
 
     &__buttons {
@@ -155,27 +209,18 @@ body {
   }
 
   &__messages {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin: 0 20px;
 
     &__name {
-      text-align: center;
-    }
-
-    &__dialog input {
       height: 30px;
-      width: 100vh;
-      border: none;
-      margin-bottom: 10px;
-      border-bottom: 1px solid $var2;
-      border-radius: 40px;
-      background-color: $var4;
     }
 
     &__menu {
-      padding-top: 10px;
+      padding: 10px 0;
       display: flex;
-      max-width: 100%;
       justify-content: space-between;
     }
 
@@ -186,13 +231,37 @@ body {
     }
 
     &__dialog {
+      overflow-y: scroll;
+      display: flex;
+      flex-direction: column-reverse;
+      height: 65vh;
       padding: 20px 0;
+    }
+
+    &__dialog input {
+      height: 30px;
+      width: 65vw;
+      border: none;
+      margin-bottom: 10px;
+      border-bottom: 1px solid $var2;
+      border-radius: 40px;
+      background-color: $var4;
     }
 
     &__form {
       display: flex;
       position: absolute;
       bottom: 5vh;
+    }
+
+    &__form input {
+      height: 30px;
+      width: 65vw;
+      border: none;
+      margin-bottom: 10px;
+      border-bottom: 1px solid $var2;
+      border-radius: 40px;
+      background-color: $var4;
     }
 
     &__error {
@@ -221,12 +290,16 @@ body {
   }
 
   &__title {
-    margin-bottom: 32px;
+    margin: 32px;
   }
 
   &__form {
-    margin-bottom: 32px;
     width: 100%;
+  }
+
+  &__error {
+    margin: 10px 0;
+    color: red;
   }
 
   &__content {
@@ -239,4 +312,26 @@ body {
     flex-direction: column;
     background-color: white;
   }
+}
+
+@media (max-height: 500px) {
+  .chat__messages__dialog {
+    height: 55vh;
+  }
+}
+
+@media (max-height: 350px) {
+  .chat__messages__dialog {
+    height: 45vh;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  padding-left: 50px;
+  border-radius: 5px;
+  background-color: $var2;
 }

@@ -5,12 +5,12 @@ import { Button } from "../../components/button/button";
 import LoginApi from "../../api/loginApi";
 import { Router } from "../../utils/router/Router";
 
-interface DataProps {
+interface IProfileProps {
   avatar: string;
   userData: object;
   returnToChatButton: HTMLElement;
   profileButton: HTMLElement;
-} 
+}
 
 const router = new Router();
 
@@ -55,7 +55,7 @@ export class ProfilePage extends Block {
   }
 
   render() {
-    const data: DataProps = {
+    const data: IProfileProps = {
       avatar:
         `https://ya-praktikum.tech/api/v2/resources` +
         this.props.userData?.avatar,

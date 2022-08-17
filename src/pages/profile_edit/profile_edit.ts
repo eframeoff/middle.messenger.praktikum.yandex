@@ -9,25 +9,25 @@ import LoginApi from "../../api/loginApi";
 import { Router } from "../../utils/router/Router";
 import ChatApi from "../../api/chatApi";
 
-interface DataProps {
+interface IProfileEditProps {
   image: string;
   passwordVisibleButton: HTMLElement;
   returnToProfileButton: HTMLElement;
-  display_nameInput: HTMLElement;
+  display_nameInput: any;
   emailLabel: HTMLElement;
-  emailInput: HTMLElement;
+  emailInput: any;
   loginLabel: HTMLElement;
-  loginInput: HTMLElement;
+  loginInput: any;
   first_nameLabel: HTMLElement;
-  first_nameInput: HTMLElement;
+  first_nameInput: any;
   second_nameLabel: HTMLElement;
-  second_nameInput: HTMLElement;
+  second_nameInput: any;
   phoneLabel: HTMLElement;
-  phoneInput: HTMLElement;
+  phoneInput: any;
   oldpasswordLabel: HTMLElement;
-  oldpasswordInput: HTMLElement;
+  oldpasswordInput: any;
   newpasswordLabel: HTMLElement;
-  newpasswordInput: HTMLElement;
+  newpasswordInput: any;
   profileeditButton: HTMLElement;
   changePassVisible: HTMLElement;
   savePassword: HTMLElement;
@@ -139,36 +139,64 @@ export class ProfileEditPage extends Block {
         },
       })
         .then(() => {
-          alert('Аватар успешно изменен');
           this.componentDidMount();
+          setTimeout(this.successAvatar, 500);
         })
-        .catch((data) => console.log(data));
+        .catch((data) => console.log(data.response));
     }
   }
 
   savePassword() {
-    const oldPass = document.querySelector('input[name="oldPassword"]')?.value;
-    const newPass = document.querySelector('input[name="newPassword"]')?.value;
+    const oldPass = (
+      document.querySelector('input[name="oldPassword"]') as HTMLInputElement
+    )?.value;
+    const newPass = (
+      document.querySelector('input[name="newPassword"]') as HTMLInputElement
+    )?.value;
     const data = {
       oldPassword: oldPass,
       newPassword: newPass,
     };
     ChatApi.savePassword(data)
       .then(() => {
-        alert("Пароль успешно сохранен");
         this.props.changePassVisible = !this.props.changePassVisible;
+        this.successPassword();
       })
-      .catch((data) => console.log(data));
+      .catch(() => this.failurePassword());
   }
 
   saveUserData(data: any) {
     ChatApi.saveUserData(data)
       .then(() => {
-        this.componentDidMount();
-        alert("Данные пользователя успешно сохранены");
         this.setProps(this.props);
+        this.componentDidMount();
+        setTimeout(this.successUserData, 500);
       })
       .catch((data) => console.log(data));
+  }
+
+  successUserData() {
+    (document.getElementById("someEvent")!.style.color = "green"),
+      (document.getElementById("someEvent")!.innerHTML =
+        "Данные успешно обновлены");
+  }
+
+  successAvatar() {
+    (document.getElementById("someEventAvatar")!.style.color = "green"),
+      (document.getElementById("someEventAvatar")!.innerHTML =
+        "Аватар успешно обновлен");
+  }
+
+  successPassword() {
+    (document.getElementById("someEvent")!.style.color = "green"),
+      (document.getElementById("someEvent")!.innerHTML =
+        "Пароль успешно обновлен");
+  }
+
+  failurePassword() {
+    (document.getElementById("someEvent")!.style.color = "red"),
+      (document.getElementById("someEvent")!.innerHTML =
+        "Проверьте правильность ввода паролей");
   }
 
   saveProfile = (e: Event) => {
@@ -199,8 +227,8 @@ export class ProfileEditPage extends Block {
             type: element.name,
             errorMsg: `${element.name}Error`,
           })
-          ? valid
-          : false;
+            ? valid
+            : false;
           data[element.id] = element.value;
         });
 
@@ -214,7 +242,7 @@ export class ProfileEditPage extends Block {
           );
           console.log(Object.fromEntries(formData));
           if (valid) {
-          this.saveUserData(Object.fromEntries(formData));
+            this.saveUserData(Object.fromEntries(formData));
           }
         }
         break;
@@ -223,7 +251,7 @@ export class ProfileEditPage extends Block {
   };
 
   render() {
-    const data: DataProps = {
+    const data: IProfileEditProps = {
       returnToProfileButton: this.props.returnToProfileButton.render(),
       image:
         `https://ya-praktikum.tech/api/v2/resources` +

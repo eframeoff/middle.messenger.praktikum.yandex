@@ -9,15 +9,15 @@ import { Router } from "../../utils/router/Router";
 import LoginApi from "../../api/loginApi";
 const router = new Router();
 
-interface DataProps {
-    loginField: string;
-    passwordField: string;
-    signinBtn: HTMLElement;
-    signupBtn: HTMLElement;
-    loginInput: HTMLElement;
-    passwordInput: HTMLElement;
-    loginLabel: HTMLElement;
-    passwordLabel: HTMLElement;
+interface ISignInProps {
+  loginField: string;
+  passwordField: string;
+  signinBtn: HTMLElement;
+  signupBtn: HTMLElement;
+  loginInput: HTMLElement;
+  passwordInput: HTMLElement;
+  loginLabel: HTMLElement;
+  passwordLabel: HTMLElement;
 }
 
 export class SignInPage extends Block {
@@ -99,12 +99,14 @@ export class SignInPage extends Block {
         router.go("/sign-up");
         break;
       case document.getElementById(this.props.signinButton.props.id): {
+        document.getElementById("authError")!.innerHTML = "";
         let valid = true;
         const form: HTMLFormElement | null = document.querySelector(
           'form[name="formDat"]'
         )!;
         const data: { [key: string]: string } = {};
         const dataArray = Array.from(form!.elements) as HTMLInputElement[];
+
         dataArray.forEach((element) => {
           valid = validateFunc({
             value: element.value,
@@ -119,7 +121,11 @@ export class SignInPage extends Block {
             const data = Object.fromEntries(formData);
             LoginApi.signIn(data)
               .then(() => router.go("/messenger"))
-              .catch((data) => console.log(JSON.parse(data.response)));
+              .catch(
+                () =>
+                  (document.getElementById("authError")!.innerHTML =
+                    "Ошибка авторизации. Проверьте логин и пароль")
+              );
           }
         }
         break;
@@ -128,7 +134,7 @@ export class SignInPage extends Block {
   };
 
   render() {
-    const data : DataProps = {
+    const data: ISignInProps = {
       loginField: "Логин",
       passwordField: "Пароль",
       signinBtn: this.props.signinButton.render(),

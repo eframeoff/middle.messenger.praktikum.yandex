@@ -10,7 +10,7 @@ import RegistrApi from "../../api/registrApi";
 
 const router = new Router();
 
-interface DataProps {
+interface ISignUpProps {
   loginField: string;
   passwordField: string;
   emailLabel: HTMLElement;
@@ -188,8 +188,9 @@ export class SignUpPage extends Block {
               .then(() => {
                 router.go("/messenger");
               })
-              .catch((data) => {
-                console.log(data)});
+              .catch(() => {
+                console.log(data);
+              });
           }
         }
         break;
@@ -198,7 +199,7 @@ export class SignUpPage extends Block {
   };
 
   render() {
-    const data: DataProps = {
+    const data: ISignUpProps = {
       loginField: "Логин",
       passwordField: "Пароль",
       emailLabel: this.props.emailLabel.render(),

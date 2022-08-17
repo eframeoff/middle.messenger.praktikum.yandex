@@ -43,7 +43,7 @@ $var4: #e0e0e0;
 
 .signupButtonWhite {
   font-weight: bold;
-  width: 160px;
+  width: 200px;
   height: 50px;
   height: 30px;
   text-decoration: none;
@@ -70,7 +70,7 @@ $var4: #e0e0e0;
 .signupLabel {
   position: absolute;
   color: $var3;
-  bottom: 45;
+  bottom: 45px;
 }
 
 .signup {
@@ -82,13 +82,13 @@ $var4: #e0e0e0;
 
   &__title {
     text-align: center;
-    margin: 0 0 60px;
+    margin-bottom: 60px;
   }
 
   &__group {
     position: relative;
     margin-bottom: 30px;
-    padding: 0 0 20;
+    padding-bottom: 20px;
 
     &__error {
       position: absolute;

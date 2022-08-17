@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 
-const source =`<div class="container">
+const source =`
+<div class="container">
 <div class="signup">
 <p class="signup__title" >Регистрация</p>
 <form action="/register" name="formDat">
@@ -53,6 +54,7 @@ const source =`<div class="container">
         {{{signupButtonChat}}}            
     </div>
 </div>
-</div>`;
+</div>
+`;
 
 export const tpl = Handlebars.compile(source);

@@ -1,8 +1,8 @@
 import Handlebars from 'handlebars';
 
-const source = `<div class="container">
+const source = `
+<div class="container">
 {{{returnToProfileButton}}}
-
 <div class="profile_edit">
   <div class="profile_edit__main">
     <a href="{{image}}" class="profile_edit__main__logo">
@@ -19,6 +19,7 @@ const source = `<div class="container">
     <button id="avatar" class="avatarChange">Сохранить аватар</button>
     {{{display_nameInput}}}
     <div class="profile__error__display" id="display_nameError"></div>
+    <div class="someEventAvatar" id="someEventAvatar"></div>
   </div>
   <div class="profile_edit__information">
     <form action="/saveprofile" name="formDat">
@@ -57,11 +58,11 @@ const source = `<div class="container">
         <div class="profile__error" id="newPasswordError"></div>
       </div>
       {{{savePassword}}} {{/if}}
+      <div class="someEvent" id="someEvent"></div>
     </div>
   </div>
 </div>
 </div>
-
 `;
 
 export const tpl = Handlebars.compile(source);

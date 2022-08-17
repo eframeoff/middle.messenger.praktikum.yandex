@@ -1,13 +1,15 @@
 import Block from "../../utils/block/Block";
 import { tpl } from "./tpl";
 
-interface MessageProps {
+interface IMessageProps {
   id: string;
   text: string;
+  outerMessage: boolean;
+  time: string;
 }
 
 export class Message extends Block {
-  constructor(props : MessageProps) {
+  constructor(props : IMessageProps) {
     super("div", props);
   }
 

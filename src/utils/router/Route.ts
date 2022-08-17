@@ -32,12 +32,7 @@ export default class Route {
   }
 
   render() {
-    if (!this._block) {
-      this._block = new this._blockClass();
-      render(this._props.rootQuery, this._block);
-      return;
-    }
-    this._block.show();
+    this._block = new this._blockClass();
     render(this._props.rootQuery, this._block);
   }
 }

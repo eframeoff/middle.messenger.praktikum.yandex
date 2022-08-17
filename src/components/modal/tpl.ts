@@ -8,6 +8,7 @@ const source = `
     <form id="modalForm" class="modal__form">
     <input id="{{idInput}}" class="{{classInput}}" type="{{typeInput}}">
     </form>
+    <div class='modal__error' id='{{modalError}}'></div>
     <div class="modal__buttons"> 
     <button id={{idAdd}} type={{typeButton}} class="{{classButtonAdd}}">{{textButtonAdd}}</button>
     <button id={{idClose}} type={{typeButton}} class="{{classButtonClose}}">{{textButtonClose}}</button>
