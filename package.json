@@ -6,16 +6,13 @@
     "dev": "webpack serve",
     "build": "webpack",
     "start" : "webpack && node ./app.js",
-    "dev:parcel": "parcel static/index.html -p 3000",
-    "build:parcel": "parcel build static/*.html",
-    "start:parcel": "parcel build static/index.html && node app.js",
     "stylelint": "stylelint src/pages/**/*.scss --custom-syntax postcss-scss",
     "eslint": "eslint src/pages/**/*.ts",
     "test": "mocha -r jsdom-global/register -r ts-node/register 'src/utils/http/*.spec.ts'"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm-run-all test lint:all"
+      "pre-commit": "npm run stylelint && npm run eslint && npm run test"
     }
   },
   "keywords": [],
