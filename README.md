@@ -2,11 +2,12 @@
 
 ## Pull requests
 
-3 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/7
+4 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/8
 
 Проверенные PR:
 1 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/3
 2 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/6
+3 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/7
 
 ## FIGMA
 
