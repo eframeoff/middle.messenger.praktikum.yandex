@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars';
+import Handlebars from "handlebars";
 
 const source = `
 <label class="{{classLabel}}">{{textLabel}}</label>

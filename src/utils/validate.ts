@@ -1,4 +1,16 @@
-const regExps = {
+enum Type {
+  Login = "login",
+  Password = "password",
+  Repeat_password = "repeat_password",
+  Email = "email",
+  First_name = "first_name",
+  Second_name = "second_name",
+  Display_name = "display_name",
+  Phone = "phone",
+  Message = "message",
+}
+
+const REG_EXPS = {
   login: /^[a-z0-9]{3,20}$/i,
   password: /(?=.*[0-9])(?=.*[A-Z])[0-9A-Za-z!@#$%^&*]{8,40}/,
   email: /^[0-9a-z\-.]+@[0-9a-z-]{2,}\.[a-z]{2,}$/i,
@@ -7,7 +19,7 @@ const regExps = {
   message: /^[\s\S]{1,10}/,
 };
 
-const errorMessages = {
+const ERROR_MESSAGES = {
   login: "3-20 латинских символов",
   password: "8-40 латинских символов, одна заглавная и цифра",
   email: "проверьте правильность написания почты",
@@ -18,47 +30,44 @@ const errorMessages = {
 
 interface Params {
   value: string;
-  type: string;
+  type?: string;
   errorMsg: string;
 }
 
 export function validateFunc(params: Params) {
-  let isValid: Boolean = false;
+  let isValid: any = false;
   const { value, type, errorMsg } = params;
   const error = document.getElementById(errorMsg);
   switch (type) {
-    case "login":
-      isValid = regExps.login.test(value);
-      error!.innerText = isValid ? "" : errorMessages.login;
+    case Type.Login:
+      isValid = REG_EXPS.login.test(value);
+      error!.innerText = isValid ? "" : ERROR_MESSAGES.login;
       break;
-    case "password":
-    case "repeat_password":
-    case "oldPassword":
-    case "newPassword":
-      isValid = regExps.password.test(value);
-      error!.innerText = isValid ? "" : errorMessages.password;
+    case Type.Password:
+    case Type.Repeat_password:
+      isValid = REG_EXPS.password.test(value);
+      error!.innerText = isValid ? "" : ERROR_MESSAGES.password;
       break;
-    case "email":
-      isValid = regExps.email.test(value);
-      error!.innerText = isValid ? "" : errorMessages.email;
+    case Type.Email:
+      isValid = REG_EXPS.email.test(value);
+      error!.innerText = isValid ? "" : ERROR_MESSAGES.email;
       break;
-    case "first_name":
-    case "second_name":
-    case "display_name":
-      isValid = regExps.name.test(value);
-      error!.innerText = isValid ? "" : errorMessages.name;
+    case Type.First_name:
+    case Type.Second_name:
+    case Type.Display_name:
+      isValid = REG_EXPS.name.test(value);
+      error!.innerText = isValid ? "" : ERROR_MESSAGES.name;
       break;
-    case "phone":
-      isValid = regExps.phone.test(value);
-      error!.innerText = isValid ? "" : errorMessages.phone;
+    case Type.Phone:
+      isValid = REG_EXPS.phone.test(value);
+      error!.innerText = isValid ? "" : ERROR_MESSAGES.phone;
       break;
-    case "message":
-      isValid = regExps.message.test(value);
-      error!.innerText = isValid ? "" : errorMessages.message;
+    case Type.Message:
+      isValid = REG_EXPS.message.test(value);
+      error!.innerText = isValid ? "" : ERROR_MESSAGES.message;
       break;
     default:
       isValid = false;
   }
-
   return isValid;
 }

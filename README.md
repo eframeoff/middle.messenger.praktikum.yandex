@@ -16,16 +16,6 @@ https://www.figma.com/file/rlbZs2pd7V9ljcckeUEa0G/Y.Practicum-Messenger?node-id=
 
 https://teal-crepe-537643.netlify.app
 
-## Основные выполненные задачи 2 спринта
-
-- Подключен TypeScript
-- Добавлена страница чатов
-- Реализован компонентный подход
-- Добавлена валидация форм
-- Добавлена реализация Block и EvenBus
-- Добавлен класс HTTPTransport
-- Добавлены линтеры: ESLint, Stylelint
-
 ## Установка
 
 ```bash
@@ -40,14 +30,26 @@ npm install
 npm run build
 ```
 
-Запуск проекта на localhost:3000 
+Запуск проекта в режиме разработки (port:3000)
+
+```bash
+npm run dev
+```
+
+Запуск node server (port:3000)
 
 ```bash
 npm run start
 ```
 
-Запуск node server
+Запуск тестов
 
 ```bash
-npm run dev
+npm run test
+```
+
+Запуск линтеров
+
+```bash
+npm run lint
 ```

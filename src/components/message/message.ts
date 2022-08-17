@@ -1,15 +1,13 @@
 import Block from "../../utils/block/Block";
 import { tpl } from "./tpl";
 
-interface ButtonProps {
+interface MessageProps {
   id: string;
-  classButton: string;
-  typeButton: string;
-  textButton: string;
+  text: string;
 }
 
-export class Button extends Block {
-  constructor(props: ButtonProps) {
+export class Message extends Block {
+  constructor(props : MessageProps) {
     super("div", props);
   }
 

@@ -2,7 +2,7 @@ $var1: #2d9cdb;
 $var2: #1c74a7;
 $var3: #e0e0e0;
 
-.returnToProfile {
+.returnToProfileButton {
   position: absolute;
   top: 4%;
   left: 3%;
@@ -16,13 +16,45 @@ $var3: #e0e0e0;
   border: none;
   border-radius: 40px;
 
-  img {
-    text-align: center;
-  }
-
   &:hover {
     background: $var2;
   }
+}
+
+.profileEdit,
+.passwordVisibleButton,
+.savePassword,
+.avatarChange {
+  font-weight: bold;
+  width: 150px;
+  height: 50px;
+  height: 30px;
+  text-decoration: none;
+  transition: 0.2s;
+  border-radius: 40px;
+  color: white;
+  background: $var1;
+  border: 2px solid $var1;
+  margin-bottom: 20px;
+
+  &:hover {
+    background: white;
+    color: $var1;
+    border-color: $var1;
+  }
+}
+
+.avatarEditProfile {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profileInput {
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid $var3;
 }
 
 .profile_edit {
@@ -38,39 +70,6 @@ $var3: #e0e0e0;
     align-items: center;
     width: 400px;
     height: 500px;
-
-    img {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-    }
-
-    input {
-      text-align: center;
-      border: none;
-      border-bottom: 1px solid $var3;
-      margin-bottom: 20px;
-    }
-
-    button {
-      font-weight: bold;
-      width: 120px;
-      height: 50px;
-      height: 30px;
-      text-decoration: none;
-      transition: 0.2s;
-      border-radius: 40px;
-      color: white;
-      background: $var1;
-      border: 2px solid $var1;
-
-      &:hover {
-        background: white;
-        color: $var1;
-        border-color: $var1;
-      }
-    }
   }
 
   &__information {
@@ -80,20 +79,15 @@ $var3: #e0e0e0;
     align-items: center;
     width: 400px;
     height: 500px;
-
-    ul li {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-      margin-bottom: 40px;
-      list-style-type: none;
-
-      input {
-        border: none;
-        border-bottom: 1px solid $var3;
-      }
-    }
   }
+}
+
+.profile__edit_list-item {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 40px;
+  list-style-type: none;
 }
 
 .profile__error {
