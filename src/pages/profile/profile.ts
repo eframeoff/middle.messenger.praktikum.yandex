@@ -57,7 +57,7 @@ export class ProfilePage extends Block {
   render() {
     const data: IProfileProps = {
       avatar:
-        `https://ya-praktikum.tech/api/v2/resources` +
+        `${process.env.API_URL}/resources` +
         this.props.userData?.avatar,
       userData: this.props.userData,
       returnToChatButton: this.props.returnToChatButton.render(),

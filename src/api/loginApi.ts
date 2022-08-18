@@ -1,6 +1,6 @@
 import HTTPTransport from "../utils/http/HTTPTransport";
 
-const http = new HTTPTransport("https://ya-praktikum.tech/api/v2/auth");
+const http = new HTTPTransport(`${process.env.API_URL}/auth`);
 
 class LoginApi {
   signIn(data: object) {

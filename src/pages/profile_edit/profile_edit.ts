@@ -176,27 +176,26 @@ export class ProfileEditPage extends Block {
   }
 
   successUserData() {
-    (document.getElementById("someEvent")!.style.color = "green"),
-      (document.getElementById("someEvent")!.innerHTML =
-        "Данные успешно обновлены");
+    document.getElementById("someEvent")!.style.color = "green";
+    document.getElementById("someEvent")!.innerHTML =
+      "Данные успешно обновлены";
   }
 
   successAvatar() {
-    (document.getElementById("someEventAvatar")!.style.color = "green"),
-      (document.getElementById("someEventAvatar")!.innerHTML =
-        "Аватар успешно обновлен");
+    document.getElementById("someEventAvatar")!.style.color = "green";
+    document.getElementById("someEventAvatar")!.innerHTML =
+      "Аватар успешно обновлен";
   }
 
   successPassword() {
-    (document.getElementById("someEvent")!.style.color = "green"),
-      (document.getElementById("someEvent")!.innerHTML =
-        "Пароль успешно обновлен");
+    document.getElementById("someEvent")!.style.color = "green";
+    document.getElementById("someEvent")!.innerHTML = "Пароль успешно обновлен";
   }
 
   failurePassword() {
-    (document.getElementById("someEvent")!.style.color = "red"),
-      (document.getElementById("someEvent")!.innerHTML =
-        "Проверьте правильность ввода паролей");
+    document.getElementById("someEvent")!.style.color = "red";
+    document.getElementById("someEvent")!.innerHTML =
+      "Проверьте правильность ввода паролей";
   }
 
   saveProfile = (e: Event) => {
@@ -254,7 +253,7 @@ export class ProfileEditPage extends Block {
     const data: IProfileEditProps = {
       returnToProfileButton: this.props.returnToProfileButton.render(),
       image:
-        `https://ya-praktikum.tech/api/v2/resources` +
+        `${process.env.API_URL}/resources` +
         this.props.userData?.avatar,
       loginInput: new Input({
         classInput: "profileInput",

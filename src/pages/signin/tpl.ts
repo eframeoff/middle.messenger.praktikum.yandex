@@ -4,7 +4,7 @@ const source = `
 <div class="container">
 <div class="signin">
  <p class="signin__title">Авторизация</p>
- <form action="/login" name="formDat">
+ <form name="formDat">
      <div class="signin__group">
           {{{ loginLabel }}}             
           {{{ loginInput }}} 

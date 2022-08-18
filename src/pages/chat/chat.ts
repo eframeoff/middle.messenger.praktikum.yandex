@@ -303,7 +303,7 @@ export class ChatPage extends Block {
         this.props.curChat.token = JSON.parse(data.response).token;
         this.setProps(this.props);
         this.socket = new WebSocket(
-          `wss://ya-praktikum.tech/ws/chats/${this.props.userData.id}/${this.props.curChat.id}/${this.props.curChat.token}`
+          `${process.env.WS_URL}/chats/${this.props.userData.id}/${this.props.curChat.id}/${this.props.curChat.token}`
         );
 
         this.socket.addEventListener("open", () => {

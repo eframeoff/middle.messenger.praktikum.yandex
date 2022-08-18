@@ -1,13 +1,13 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: "development",
   entry: "/index.ts",
   output: {
     filename: "index.js",
-		path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, "dist"),
   },
 
   resolve: {
@@ -42,15 +42,17 @@ module.exports = {
     ],
   },
   devServer: {
-		hot: true,
-		historyApiFallback: true,
-		static: path.join(__dirname, 'dist'),
-		compress: true,
-		port: 7070,
-		open: true,
-	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: './static/index.html',
-		}),
-	],};
+    hot: true,
+    historyApiFallback: true,
+    static: path.join(__dirname, "dist"),
+    compress: true,
+    port: 7070,
+    open: true,
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./static/index.html",
+    }),
+    new Dotenv(),
+  ],
+};

@@ -4,7 +4,7 @@ const source =`
 <div class="container">
 <div class="signup">
 <p class="signup__title" >Регистрация</p>
-<form action="/register" name="formDat">
+<form name="formDat">
     <div class="signup__group">
         {{{emailLabel}}}                
         {{{emailInput}}} 

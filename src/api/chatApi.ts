@@ -1,7 +1,7 @@
 import HTTPTransport from "../utils/http/HTTPTransport";
 
-const http = new HTTPTransport("https://ya-praktikum.tech/api/v2/chats");
-const httpUsers = new HTTPTransport("https://ya-praktikum.tech/api/v2/user");
+const http = new HTTPTransport(`${process.env.API_URL}/chats`);
+const httpUsers = new HTTPTransport(`${process.env.API_URL}/user`);
 
 class ChatApi {
   addChat(data: object) {

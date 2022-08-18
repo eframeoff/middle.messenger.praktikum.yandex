@@ -22,7 +22,7 @@ const source = `
     <div class="someEventAvatar" id="someEventAvatar"></div>
   </div>
   <div class="profile_edit__information">
-    <form action="/saveprofile" name="formDat">
+    <form name="formDat">
       <div class="profile__edit_list">
         <div class="profile__edit_list-item">
           {{{first_nameLabel}}} {{{first_nameInput}}}
