@@ -1,6 +1,7 @@
 import Handlebars from "handlebars";
 
-const source = `<div class="container">
+const source = `
+<div class="container">
 {{{returnToChatButton}}}
 <div class="profile">
   <div class="profile__main">

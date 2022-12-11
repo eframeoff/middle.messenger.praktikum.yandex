@@ -1,14 +1,14 @@
 import Block from "../../utils/block/Block";
 import { tpl } from "./tpl";
 
-interface ChatCardProps {
+interface IChatCardProps {
   id: string;
   chatAvatar: HTMLImageElement;
   nameUser: string;
-  lastMessage: string;
+  lastMessage?: string;
 }
 export class ChatCard extends Block {
-  constructor(props: ChatCardProps) {
+  constructor(props: IChatCardProps) {
     super("div", props);
   }
 

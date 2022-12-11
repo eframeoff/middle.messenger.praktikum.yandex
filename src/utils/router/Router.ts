@@ -1,13 +1,13 @@
 import Route from "./Route";
 
 export class Router {
-  routes : any;
+  routes: any;
   history: History;
   _currentRoute: any;
-  _rootQuery : string;
+  _rootQuery: string;
   private static __instance: Router;
 
-  constructor(rootQuery? : string) {
+  constructor(rootQuery?: string) {
     if (Router.__instance) {
       return Router.__instance;
     }
@@ -19,7 +19,7 @@ export class Router {
     Router.__instance = this;
   }
 
-  use(pathname : string, block : any) {
+  use(pathname: string, block: any) {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery });
     this.routes.push(route);
 
@@ -27,28 +27,28 @@ export class Router {
   }
 
   start() {
-    window.onpopstate = (event : any) => {
+    window.onpopstate = (event: any) => {
       this._onRoute(event.currentTarget.location.pathname);
     };
     this._onRoute(window.location.pathname);
   }
 
-  private _onRoute(pathname : string) {
+  private _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
 
     if (!route) {
-      return;
+      return this.go("/404");
     }
+
     if (this._currentRoute) {
       this._currentRoute.leave();
     }
 
     this._currentRoute = route;
-
     route.render(route, pathname);
   }
 
-  go(pathname : string) {
+  go(pathname: string) {
     this.history.pushState({}, "", pathname);
     this._onRoute(pathname);
   }
@@ -61,7 +61,7 @@ export class Router {
     this.history.forward();
   }
 
-  getRoute(pathname : string) {
-    return this.routes.find((route : any) => route.match(pathname));
+  getRoute(pathname: string) {
+    return this.routes.find((route: any) => route.match(pathname));
   }
 }

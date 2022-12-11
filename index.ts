@@ -12,8 +12,8 @@ router
   .use("/", SignInPage)
   .use("/sign-up", SignUpPage)
   .use("/messenger", ChatPage)
-  .use("/404", Page404)
   .use("/500", Page500)
   .use("/profile", ProfilePage)
   .use("/settings", ProfileEditPage)
+  .use("/404", Page404)
   .start();

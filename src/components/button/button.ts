@@ -1,7 +1,7 @@
 import Block from "../../utils/block/Block";
 import { tpl } from "./tpl";
 
-interface ButtonProps {
+interface IButtonProps {
   id: string;
   classButton: string;
   typeButton: string;
@@ -9,7 +9,7 @@ interface ButtonProps {
 }
 
 export class Button extends Block {
-  constructor(props: ButtonProps) {
+  constructor(props: IButtonProps) {
     super("div", props);
   }
 

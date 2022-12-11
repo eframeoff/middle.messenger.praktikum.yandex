@@ -17,6 +17,10 @@ https://www.figma.com/file/rlbZs2pd7V9ljcckeUEa0G/Y.Practicum-Messenger?node-id=
 
 https://teal-crepe-537643.netlify.app
 
+## Heroku
+
+https://ya-messenger-eframeoff.herokuapp.com
+
 ## Установка
 
 ```bash
@@ -31,7 +35,7 @@ npm install
 npm run build
 ```
 
-Запуск проекта в режиме разработки (port:3000)
+Запуск проекта в режиме разработки (port:7070)
 
 ```bash
 npm run dev
@@ -49,8 +53,16 @@ npm run start
 npm run test
 ```
 
-Запуск линтеров
+Запуск линтеров ts
 
 ```bash
-npm run lint
+npm run eslint
 ```
+
+Запуск линтеров стилей
+
+```bash
+npm run stylelint
+```
+
+

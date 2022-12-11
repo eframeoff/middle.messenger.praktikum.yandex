@@ -6,8 +6,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
-  "include": ["index.d.ts"],
+  "include": ["./src/**/**/*.ts"],
   "exclude": ["node_modules"]
 }
