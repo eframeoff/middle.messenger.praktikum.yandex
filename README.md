@@ -1,6 +1,11 @@
 # Ya.Practicum Messenger
 
-## Pull requests
+## Технологии
+
+- JavaScript, TypeScript, Sass(Scss), Handlebars
+- Parcel, Webpack, Docker, Netlify, Heroku
+
+## Выпоненные задачи
 
 Проверенные PR:
 
