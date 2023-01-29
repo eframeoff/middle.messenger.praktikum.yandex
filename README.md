@@ -2,12 +2,33 @@
 
 ## Pull requests
 
-4 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/8
-
 Проверенные PR:
+
 1 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/3
+- разработаны прототипы для основных страниц веб-мессенджера
+- настроена сборка (Parcel)
+- выполнена верстка основных страниц (Handlebars)
+- настроен Express сервер
+- настроен Netlify
+
 2 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/6
+- внедрен TypeScript
+- разработана страница чатов
+- добавлен класс Http
+- добавлен компонентный подход (Event Bus)
+- дабавлена валидация форм
+- настроены линтеры (ESLint, Stylelint)
+
 3 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/7
+- реализована работа со Swagger
+- добавлен роутинг (класс Router)
+- подключен WebSocket
+
+4 спринт: https://github.com/eframeoff/middle.messenger.praktikum.yandex/pull/8
+- написаны тесты для шаблонизатора
+- настроен Webpack
+- настроена Docker-сборка
+- проект задеплоен на Heroku
 
 ## FIGMA
 
